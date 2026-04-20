@@ -1,0 +1,66 @@
+
+
+
+#container {
+    width: clamp(380px, 100%, 430px);
+    min-height: 100vh;
+    height: 100%;
+    position: relative;
+}
+
+#date-boxes {
+    border-bottom: .5px solid !important;
+}
+
+.absen-group {
+    /* padding: 12px 15px; */
+    /* border-radius: 15px; */
+    /* align-items: ; */
+}
+.absen-group span:nth-child(2) {
+    padding: 5px 15px;
+    width: 140px;
+    text-align: center;
+    border-radius: 20px;
+    /* border: 2px solid transparent; */
+}
+#calendar-head i {
+    height: 32px;
+    aspect-ratio: 1;
+}
+#calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+#calendar-dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+.date-box {
+    aspect-ratio: 1;
+    border: .5px solid lightgray;
+}
+
+
+
+
+/* CUstomr More */
+span.dot {
+    background-color: #777;
+}
+.more-list {
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+}
+.more-list span {
+    transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.more-list span:hover {
+    font-size: 15px;
+}
+.more-list span.grey:hover {
+    font-size: 14px;
+}
+
+

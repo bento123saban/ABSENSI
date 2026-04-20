@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="bendhard16.min.css">
+    <link rel="stylesheet" href="font/fontawsome/css/all.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="grid-center">
+
+    <div id="container" class="hidden scroll barlow lightgrey">
+
+        <!-- Main Background -->
+        <div id="bg"></div>
+
+        <!-- Login -->
+        <div id="login" class="grid-center p-40 h-100 dis-none">
+            <div id="login-box" class="square w-100 white borad-20">
+
+            </div>
+        </div>
+
+        <!-- Main -->
+        <div id="content" class="w-100 h-100 relative">
+
+            <nav class="w-100 h-100 green dis-none"></nav>
+
+            <main class="w-100 h-100 p-20">
+
+                <!-- header -->
+                <header class="flex-beetwen relative">
+                    <div class="flex-start gap-10">
+                        <!-- <i class="fas fa-bars clr-grey fz-30"></i> -->
+                        <i class="fas fa-user-circle fz-50"></i>
+                        <div>
+                            <span>Morning</span>
+                            <h2 class="p-0 m-0">Lorem Ipsum</h2>
+                        </div>
+                    </div>
+                    <div id="head-cog">
+                        <!-- Detail More -->
+                        <div id="detail-more" class="grid-center relative more-box">
+                            <div class="flex-center flex-column gap-3 pointer more-icon p-10">
+                                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                            </div>
+                            <div class="more-list p-5 dis-none">
+                                <span>Update</span>
+                                <span>Refresh</span>
+                                <span>Log Out</span>
+                            </div>
+                            <input type="hidden" name="" class="more-input" id="header-more">
+                        </div>
+
+                        <!-- spinner -->
+                        <i class="fas fa-arrows-rotate spinning fz-30 dis-none" id="spinner-loader"></i>
+                    </div>
+                </header>
+                <br>
+
+                <!-- Add button -->
+                <div class="grid-center p-10 w-100 grey borad-20 box-shadow relative hidden" id="add-button">
+                    <div class="shimmer"></div>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <br>
+                <br>
+                
+                <!-- Tugas -->
+                <!-- <div class="hidden borad-20" id="task-boxes">
+                    <div id="on-task-boxes" class="dis-none p-15 red flex-beetwen w-100 h-100">
+                        <div>
+                            <span class="dis-block bolder mb-1">TUGAS</span>
+                            <span>Anda memili 3 tugas</span>
+                        </div>
+                        <i class="fas fa-list-check fz-30 pointer"></i>
+                    </div>
+                    <div id="no-task-boxes" class="grey p-15 flex-start w-100 h-100">
+                        <span class="clr-grey bolder uppercase fz-20 ">Belum ada tugas</span>
+                    </div>
+                </div> -->
+
+                <div id="dashboard-data" class="hidden p-0 borad-20 box-shadow relative">
+                    <div class="shimmer"></div>
+                    
+                    <!-- tanggal dan waktu -->
+                    <div class="p-15 white bolder fz-24 relative flex-beetwen br-grey clr-grey" id="date-boxes">
+                        <div class="date-on flex-start gap-10 borad-15" id="date-controller">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span class="dis-block">09</span>
+                            <span class="dis-block">APRIL</span>
+                            <span class="dis-block">2026</span>
+                        </div>
+                        <div class=" flex-start gap-30 fz-24">
+                            <i class="fas fa-chevron-left" id="box-date-prev"></i>
+                            <i class="fas fa-chevron-right" id="box-date-next"></i>
+                        </div>
+                    </div>
+
+                    <!-- absensi - rekap -->
+                    <div class="relative" id="absen-boxes">
+                        <div class="m-20 daily-absen flex-strech items-start flex-column gap-10 fz-18">
+                            <div class="absen-group flex-beetwen w-100 bolder clr-green ">
+                                <span class="w-100"><i class="fas fa-check-circle"></i> &nbsp; Lorem Ipsum</span>
+                                <span class="green">Kerja</span>
+                            </div>
+                            <div class="absen-group flex-beetwen w-100 bolder clr-blue ">
+                                <span class="w-100"><i class="fas fa-xmark-circle"></i> &nbsp; Lorem Ipsum</span>
+                                <span class="blue">Libur</span>
+                            </div>
+                            <div class="absen-group flex-beetwen clr-red bolder w-100">
+                                <span class="w-100"><i class="fas fa-circle-exclamation"></i> &nbsp; Lorem Ipsum</span>
+                                <span class="red">Alpa</span>
+                            </div>
+                            <div class="absen-group flex-beetwen clr-grey bolder w-100 ">
+                                <span class="w-100"><i class="fas fa-xmark-circle"></i> &nbsp; Lorem Ipsum</span>
+                                <span class="grey">Sakit</span>
+                            </div>
+                            <div class="absen-group flex-beetwen clr-grey bolder w-100 ">
+                                <span class="w-100"><i class="fas fa-xmark-circle"></i> &nbsp; Lorem Ipsum</span>
+                                <span class="grey">Izin</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- kerja - rekap -->
+                    <div class="p-15 flex-beetwen relative" id="work-boxes">
+                        <div>
+                            <span class="dis-block bolder mb-1">KERJA</span>
+                            <span class="">5 Pekerjaan di 4 Lokasi</span>
+                        </div>
+                        <i class="fas fa-chevron-right fz-30 pointer"></i>
+                    </div>
+                </div>
+
+                <div class="hr grey"></div>
+
+                <!-- Data -->
+                <div class="red p-15 borad-20 flex-beetwen relative" id="data-boxes">
+                    <div class="shimmer"></div>
+                    <div>
+                        <span class="dis-block bolder mb-1">DATA</span>
+                        <span>Lengkapi data bulan April 2026</span>
+                    </div>
+                    <i class="fas fa-calendar-alt fz-30 pointer"></i>
+                </div>
+                <br>
+
+                <!-- Kalender -->
+                <div id="calandar-box" class="relative dis-none">
+
+                    <!-- Calendar Shimmer -->
+                    <div class="shimmer"></div>
+                    
+                    <h3 class="uppercase align-center pb-1">Kalender Info</h3>
+                    
+                    <!-- Calendar Head -->
+                    <div class="flex-beetwen gap-15 w-100 mb-3" id="calendar-head">
+                        <i class="fas fa-chevron-left grid-center blue borad-10" id="calendar-prev"></i>
+                        <span class="dis-block w-100 align-center uppercase bolder clr-blue p-7 fz-20 borad-10" id="calendar-month">April 2026</span>
+                        <i class="fas fa-chevron-right grid-center blue borad-10" id="calendar-next"></i>
+                    </div>
+
+                    <!-- Calendar Days -->
+                    <div id="calendar-days" class="align-center mb-2">
+                        <span class="clr-red">Min</span>
+                        <span>Sen</span>
+                        <span>Sel</span>
+                        <span>Rab</span>
+                        <span>Kam</span>
+                        <span>Jum</span>
+                        <span>Sab</span>
+                    </div>
+
+                    <!-- Calendar Dates -->
+                    <div id="calendar-dates"></div>
+                </div>
+
+                <br><br><br><br>
+            </main>
+
+            
+
+        </div>
+
+    </div>
+
+
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
