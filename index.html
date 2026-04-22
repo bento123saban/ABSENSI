@@ -13,7 +13,7 @@
     <div id="container" class="hidden scroll barlow lightgrey">
 
         <!-- Main Background -->
-        <div id="bg"></div>
+        <div id="bg" class="vh-100 vw-100"><img src="asset/hp-bg.png" alt=""></div>
 
         <!-- Login -->
         <div id="login" class="grid-center p-40 h-100 dis-none">
@@ -60,7 +60,7 @@
                 <br>
 
                 <!-- Add button -->
-                <div class="grid-center p-10 w-100 grey borad-20 box-shadow relative hidden" id="add-button">
+                <div class="grid-center p-10 w-100 blue borad-20 box-shadow relative hidden pointer" id="add-work">
                     <div class="shimmer"></div>
                     <i class="fas fa-plus"></i>
                 </div>
@@ -81,13 +81,13 @@
                     </div>
                 </div> -->
 
-                <div id="dashboard-data" class="hidden p-0 borad-20 box-shadow relative">
+                <div id="dashboard-data" class="hidden p-0 borad-20 box-shadow relative glass-box">
                     <div class="shimmer"></div>
                     
                     <!-- tanggal dan waktu -->
-                    <div class="p-15 white bolder fz-24 relative flex-beetwen br-grey clr-grey" id="date-boxes">
+                    <div class="p-15 bolder blue fz-24 relative flex-beetwen br-grey" id="date-boxes">
                         <div class="date-on flex-start gap-10 borad-15" id="date-controller">
-                            <i class="fas fa-calendar-alt"></i>
+                            <!-- <i class="fas fa-calendar-alt"></i> -->
                             <span class="dis-block">09</span>
                             <span class="dis-block">APRIL</span>
                             <span class="dis-block">2026</span>
@@ -99,45 +99,75 @@
                     </div>
 
                     <!-- absensi - rekap -->
-                    <div class="relative" id="absen-boxes">
-                        <div class="m-20 daily-absen flex-strech items-start flex-column gap-10 fz-18">
+                    <div class="relative ph-15 pt-2" id="absen-boxes">
+                        <div class="flex-beetwen w-100 borad-10 pb-1 pointer" id="absen-box-head">
+                            <div class="w-100">
+                                <span class="dis-block w-100 uppercase bolder fz-20 bolder">Absen buruh</span>
+                                <span class="">2 Buruh belum terabsen</span>
+                            </div>
+                            <i class="fas fa-circle-exclamation fz-30 clr-red"></i>
+                        </div>
+                        <div class="flex-strech items-start flex-column gap-5 fz-18 dis-none" id="dash-absen-list">
                             <div class="absen-group flex-beetwen w-100 bolder clr-green ">
                                 <span class="w-100"><i class="fas fa-check-circle"></i> &nbsp; Lorem Ipsum</span>
-                                <span class="green">Kerja</span>
+                                <span class="clr-green">Kerja</span>
                             </div>
-                            <div class="absen-group flex-beetwen w-100 bolder clr-blue ">
+                            <div class="absen-group flex-beetwen w-100 bolder clr-grey ">
                                 <span class="w-100"><i class="fas fa-xmark-circle"></i> &nbsp; Lorem Ipsum</span>
-                                <span class="blue">Libur</span>
+                                <span class="clr-grey">Libur</span>
                             </div>
-                            <div class="absen-group flex-beetwen clr-red bolder w-100">
+                            <div class="absen-group flex-beetwen clr-red bolder w-100 uppercase">
                                 <span class="w-100"><i class="fas fa-circle-exclamation"></i> &nbsp; Lorem Ipsum</span>
-                                <span class="red">Alpa</span>
+                                <span class="clr-red"><i class="fas fa-circle-exclamation"></i></span>
                             </div>
                             <div class="absen-group flex-beetwen clr-grey bolder w-100 ">
                                 <span class="w-100"><i class="fas fa-xmark-circle"></i> &nbsp; Lorem Ipsum</span>
-                                <span class="grey">Sakit</span>
+                                <span class="clr-grey">Sakit</span>
                             </div>
                             <div class="absen-group flex-beetwen clr-grey bolder w-100 ">
                                 <span class="w-100"><i class="fas fa-xmark-circle"></i> &nbsp; Lorem Ipsum</span>
-                                <span class="grey">Izin</span>
+                                <span class="clr-grey">Izin</span>
                             </div>
                         </div>
+                        <hr>
                     </div>
-                    
+
+
                     <!-- kerja - rekap -->
-                    <div class="p-15 flex-beetwen relative" id="work-boxes">
-                        <div>
-                            <span class="dis-block bolder mb-1">KERJA</span>
-                            <span class="">5 Pekerjaan di 4 Lokasi</span>
+                    <div id="work-boxes" class="ph-15">
+                        <div class="flex-beetwen relative pb-1 pointer" id="work-box-head">
+                            <div>
+                                <span class="dis-block bolder fz-20 uppercase">KERJA</span>
+                                <span class="">5 Pekerjaan di 4 Lokasi</span>
+                            </div>
+                            <i class="fas fa-list-check fz-30 pointer clr-green"></i>
                         </div>
-                        <i class="fas fa-chevron-right fz-30 pointer"></i>
+                        <div id="dash-work-list" class="pl-15 flex-start items-start flex-column gap-10 dis-none">
+                            
+                            <div class="work-group">
+                                <span class="fz-18 bolder fz-18">Respon Call 112</span>
+                                <p class="p-0 m-0 fz-14 cut-text"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
+                            </div>
+
+                            <div class="work-group">
+                                <span class="fz-18 bolder fz-18">Respon Call 112</span>
+                                <p class="p-0 m-0 fz-14 cut-text"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
+                            </div>
+
+                            <div class="work-group">
+                                <span class="fz-18 bolder fz-18">Respon Call 112</span>
+                                <p class="p-0 m-0 fz-14 cut-text"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
+                            </div>
+                            
+                        </div>
                     </div>
+                    <br>
                 </div>
 
                 <div class="hr grey"></div>
 
                 <!-- Data -->
-                <div class="red p-15 borad-20 flex-beetwen relative" id="data-boxes">
+                <div class="red p-15 borad-20 flex-beetwen relative hidden" id="data-boxes">
                     <div class="shimmer"></div>
                     <div>
                         <span class="dis-block bolder mb-1">DATA</span>
@@ -148,12 +178,12 @@
                 <br>
 
                 <!-- Kalender -->
-                <div id="calandar-box" class="relative dis-none">
+                <div id="calendar-box" class="relative glass-box p-20 borad-20 hidden">
 
                     <!-- Calendar Shimmer -->
                     <div class="shimmer"></div>
                     
-                    <h3 class="uppercase align-center pb-1">Kalender Info</h3>
+                    <h3 class="uppercase align-center m-0 pb-1">Kalender Info</h3>
                     
                     <!-- Calendar Head -->
                     <div class="flex-beetwen gap-15 w-100 mb-3" id="calendar-head">
@@ -177,14 +207,120 @@
                     <div id="calendar-dates"></div>
                 </div>
 
-                <br><br><br><br>
+                <br>
             </main>
+        </div>
 
-            
+        <!-- Form Input Work -->
+        <div id="work-form" class="dis-none fixed top-0 left-0 z-100">
+            <div class="p-20">
+                <div class="flex-beetwen mb-1">
+                    <h2 class="m-0">Input Data Kerja</h2>
+                    <i class="fas fa-times fz-30 pointer clr-red" id="close-work-form"></i>
+                </div>
 
+                
+                <div class="glass-box borad-20 box-shadow hidden relative">
+                    <!-- Date Slider Dummy -->
+                    <div id="form-date-slider" class="flex-beetwen p-15 blue">
+                        <i class="fas fa-chevron-left pointer"></i>
+                        <span class="dis-block bolder fz-20 w-100 align-center">22 April 2026</span>
+                        <i class="fas fa-chevron-right pointer"></i>
+                    </div>
+                    <br>
+
+                    <!-- Photo Uploads -->
+                    <div class="gap-10 ph-15 mb-1" id="form-photos-box">
+                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
+                            <i class="fas fa-camera fz-24"></i>
+                            <input type="file" accept="image/*" capture="environment" class="dis-none">
+                        </div>
+                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
+                            <i class="fas fa-camera fz-24"></i>
+                            <input type="file" accept="image/*" capture="environment" class="dis-none">
+                        </div>
+                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
+                            <i class="fas fa-camera fz-24"></i>
+                            <input type="file" accept="image/*" capture="environment" class="dis-none">
+                        </div>
+                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
+                            <i class="fas fa-camera fz-24"></i>
+                            <input type="file" accept="image/*" capture="environment" class="dis-none">
+                        </div>
+                    </div>
+
+                    
+
+                    <!-- Jenis Kerja -->
+                    <div class="mb-3 mt-2 ph-15">
+                        <div class="mb-1 bolder flex-beetwen">
+                            <span>Jenis kerja</span>
+                            <label class="custom-checkbox flex-start items-end pointer">
+                                <input type="checkbox" id="is-continuation">
+                                <span class="checkmark bolder"></span>
+                                Lanjutan ?
+                            </label>
+                        </div>
+                        <!-- Lanjutan -->
+                        <select id="continuation-id" class="w-100 p-10 borad-10 br-grey fz-16 mb-2 dis-none">
+                            <option value="" selected disabled>Pilih ID Kerja Sebelumnya</option>
+                            <option value="WRK001">WRK001 - Respon Call 112</option>
+                            <option value="WRK002">WRK002 - Patroli Siang</option>
+                        </select>
+                        <select class="w-100 p-10 borad-10 br-grey fz-16">
+                            <option value="" selected disabled>Pilih Jenis Kerja</option>
+                            <option value="1">Respon Call 112</option>
+                            <option value="2">Mengawas</option>
+                            <option value="3">Pengamanan Event</option>
+                        </select>
+                    </div>
+
+                    <!-- Lokasi -->
+                    <div class="mb-3 ph-15">
+                        <label class="dis-block mb-1 bolder">Lokasi</label>
+                        <select class="w-100 p-10 borad-10 br-grey fz-16" id="location-select">
+                            <option value="" selected disabled>Pilih Lokasi</option>
+                            <option value="loc1">Lokasi 01</option>
+                            <option value="loc2">Lokasi 02</option>
+                            <option value="other">Lainnya (Input manual)</option>
+                        </select>
+                        <input type="text" id="custom-location" class="w-100 p-10 borad-10 br-grey fz-16 mt-2 dis-none" placeholder="Masukkan lokasi baru">
+                    </div>
+
+                    <!-- Buruh Checklist -->
+                    <div class="mb-4 ph-15">
+                        <div class="mb-2 bolder flex-beetwen">
+                            <span>Buruh terlibat</span>
+                            <label class="custom-checkbox flex-start items-end pointer">
+                                <input type="checkbox" id="check-all-buruh">
+                                <span class="checkmark bolder"></span>
+                                Pilih Semua
+                            </label>
+                        </div>
+                        <div class="flex-strech flex-column gap-10">
+                            <label class="flex-start gap-10 p-10 borad-10 pointer">
+                                <input type="checkbox" name="buruh" value="1">
+                                <span>Lorem Ipsum 1</span>
+                            </label>
+                            <label class="flex-start gap-10 p-10 borad-10 pointer">
+                                <input type="checkbox" name="buruh" value="2">
+                                <span>Lorem Ipsum 2</span>
+                            </label>
+                            <label class="flex-start gap-10 p-10 borad-10 pointer">
+                                <input type="checkbox" name="buruh" value="3">
+                                <span>Lorem Ipsum 3</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="dis-block p-15 m-15 blue borad-20 fz-18 box-shadow">SIMPAN DATA</button>
+                </div>
+            </div>
         </div>
 
     </div>
+
+    
 
 
 

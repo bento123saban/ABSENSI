@@ -1,11 +1,16 @@
 
 import Calendar from "./js/calendar";
-import { CustomMore } from "./js/ui";
+import { CustomMore, dashboardToggle, workFormLogic } from "./js/ui";
+
+import request from "./js/request";
+window.Request = new request();
 
 // Inisialisasi kalender sebagai acuan program
 const appCalendar = new Calendar();
 
 CustomMore();
+dashboardToggle();
+workFormLogic();
 
 /**
  * Inisialisasi UI Kalender menggunakan class Calendar
@@ -36,7 +41,7 @@ function initCalendarUI() {
             const spans = dateOn.querySelectorAll("span");
             if (spans.length >= 3) {
                 spans[0].textContent = info.currentDay.toString().padStart(2, "0");
-                spans[1].textContent = info.monthName.toUpperCase();
+                spans[1].textContent = info.monthName;
                 spans[2].textContent = info.year;
             }
         }
