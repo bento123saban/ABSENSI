@@ -10,7 +10,7 @@
 </head>
 <body class="grid-center">
 
-    <div id="container" class="hidden scroll barlow lightgrey">
+    <div id="container" class="hidden scroll barlow clr-softblack">
 
         <!-- Main Background -->
         <div id="bg" class="vh-100 vw-100"><img src="asset/hp-bg.png" alt=""></div>
@@ -60,11 +60,17 @@
                 <br>
 
                 <!-- Add button -->
-                <div class="grid-center p-10 w-100 blue borad-20 box-shadow relative hidden pointer" id="add-work">
+                <div class="borad-20 hidden relative glass-box flex-start">
                     <div class="shimmer"></div>
-                    <i class="fas fa-plus"></i>
+                    <div class="flex-beetwen w-100 p-15">
+                        <span><i class="fa-regular fa-cloud"></i>Online</span>
+                        <span><i class="fas fa-arrows-rotate"></i> 0 antrean</span>
+                    </div>
+                    <div class="grid-center p-10 h-100 blue aspect-square relative hidden pointer" id="add-work">
+                        <i class="fas fa-plus"></i>
+                    </div>
                 </div>
-                <br>
+                
                 <br>
                 
                 <!-- Tugas -->
@@ -163,8 +169,7 @@
                     </div>
                     <br>
                 </div>
-
-                <div class="hr grey"></div>
+                <br>
 
                 <!-- Data -->
                 <div class="red p-15 borad-20 flex-beetwen relative hidden" id="data-boxes">

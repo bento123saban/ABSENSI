@@ -515,7 +515,8 @@ body {
 }
 .clr-black, [data-color="black"] {color: black !important;}
 .br-black, [data-border="black"] {border-color: black !important;}
-
+.clr-softblack, [data-color="softblack"] {color: #333 !important;}
+.br-softblack, [data-border="softblack"] {border-color: #333 !important;}
 
 /* orange */
 .orange, [data-background="orange"] {
