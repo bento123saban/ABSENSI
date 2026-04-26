@@ -292,139 +292,6 @@ export function workFormLogic() {
         }
     }
 
-    // Lokasi Custom Datalist Logic
-    const lokasiInput = document.querySelector("#lokasi");
-    const lokasiDatalist = document.querySelector("#lokasi-datalist");
-    const clearLokasi = document.querySelector("#clear-lokasi");
-    const lokasiStarsBtn = document.querySelector("#lokasi-stars");
-
-    // 1. Configuration & Data
-    const CONFIG = {
-        data: ["Jakarta", "Surabaya", "Bandung", "Medan", "Semarang", "Makassar", "Palembang", "Yogyakarta", "Bali"],
-        activeClass: 'bg-light-grey', // Ganti sesuai class hover CSS-mu
-        hideClass: 'dis-none'
-    };
-
-    // 2. Elements Selection
-    const nodes = {
-        input: document.querySelector("#lokasi"),
-        list: document.querySelector("#lokasi-datalist"),
-        clear: document.querySelector("#clear-lokasi"),
-        star: document.querySelector("#lokasi-stars"),
-        wrapper: document.querySelector("#lokasi-wrapper")
-    };
-
-    let currentIndex = -1;
-
-    // --- Helper Functions ---
-
-    const toggleList = (show) => {
-        nodes.list.classList.toggle(CONFIG.hideClass, !show);
-        if (!show) currentIndex = -1;
-    };
-
-    const renderList = (searchTerm = "") => {
-        const filtered = CONFIG.data.filter(item => 
-            item.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-
-        if (filtered.length > 0) {
-            nodes.list.innerHTML = filtered.map((item, idx) => `
-                <div class="p-10 pointer list-item border-bottom-grey" data-value="${item}">
-                    ${highlightMatch(item, searchTerm)}
-                </div>
-            `).join('');
-            toggleList(true);
-        } else {
-            nodes.list.innerHTML = `<div class="p-10 clr-grey fz-14">Tidak ada hasil ditemukan</div>`;
-            toggleList(searchTerm.length > 0);
-        }
-    };
-
-    const highlightMatch = (text, term) => {
-        if (!term) return text;
-        const regex = new RegExp(`(${term})`, 'gi');
-        return text.replace(regex, `<strong class="clr-primary">$1</strong>`);
-    };
-
-    // --- Core Logic ---
-
-    // Input Interaction
-    nodes.input.addEventListener('input', (e) => {
-        const val = e.target.value;
-        nodes.clear.classList.toggle(CONFIG.hideClass, val.length === 0);
-        renderList(val);
-    });
-
-    // Focus & Click
-    nodes.input.addEventListener('focus', () => {
-        if (nodes.input.value.length > 0) renderList(nodes.input.value);
-    });
-
-    // Keyboard Navigation (Robust System)
-    nodes.input.addEventListener('keydown', (e) => {
-        const items = nodes.list.querySelectorAll('.list-item');
-        
-        if (e.key === 'ArrowDown') {
-            currentIndex = (currentIndex + 1) % items.length;
-            updateSelection(items);
-            e.preventDefault();
-        } else if (e.key === 'ArrowUp') {
-            currentIndex = (currentIndex - 1 + items.length) % items.length;
-            updateSelection(items);
-            e.preventDefault();
-        } else if (e.key === 'Enter') {
-            if (currentIndex > -1) {
-                selectItem(items[currentIndex].dataset.value);
-            }
-            toggleList(false);
-        } else if (e.key === 'Escape') {
-            toggleList(false);
-        }
-    });
-
-    const updateSelection = (items) => {
-        items.forEach((el, idx) => {
-            el.classList.toggle('bg-light-grey', idx === currentIndex);
-            if(idx === currentIndex) el.scrollIntoView({ block: 'nearest' });
-        });
-    };
-
-    const selectItem = (val) => {
-        nodes.input.value = val;
-        nodes.clear.classList.remove(CONFIG.hideClass);
-        toggleList(false);
-        // Dispatch event custom jika dibutuhkan oleh sistem lain
-        nodes.input.dispatchEvent(new Event('change'));
-    };
-
-    // Event Delegation untuk List Item
-    nodes.list.addEventListener('click', (e) => {
-        const item = e.target.closest('.list-item');
-        if (item) selectItem(item.dataset.value);
-    });
-
-    // Clear Button
-    nodes.clear.addEventListener('click', () => {
-        nodes.input.value = "";
-        nodes.input.focus();
-        nodes.clear.classList.add(CONFIG.hideClass);
-        toggleList(false);
-    });
-
-    // Star Button (Toggle Favorite Logic)
-    nodes.star.addEventListener('click', () => {
-        nodes.star.classList.toggle('yellow');
-        nodes.star.classList.toggle('clr-grey');
-        // Logic tambahan untuk simpan favorite bisa di sini
-    });
-
-    // Close when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!nodes.wrapper.contains(e.target) && !nodes.list.contains(e.target)) {
-            toggleList(false);
-        }
-    });
     
 }
 
@@ -442,3 +309,342 @@ window.addEventListener("change", function(e) {
         }
     }
 })
+
+/**
+ * Advanced Custom Datalist with Favorite System & Accessibility
+ * Features: OOP, Debouncing, XSS Protection, A11y, State Management, LocalStorage
+ */
+class RobustLocationDatalist {
+    constructor() {
+        // 1. Data Source (Data Riil Administratif & Taman Kota Ambon)
+        this.ALL_LOCATIONS = [
+            // === TAMAN & RUANG PUBLIK KOTA AMBON ===
+            "Taman Pattimura",
+            "Taman Gong Perdamaian Dunia",
+            "Taman Victoria",
+            "Taman Karang Panjang",
+            "Taman Makam Pahlawan Kapaha",
+            "Taman I Love Ambon",
+            "Taman Wisata Karang Panjang",
+            "Taman Makmur",
+            "Taman Marthafons",
+            "Taman Halong",
+            "Lapangan Merdeka",
+            "Taman Ambon City of Music",
+            "Taman Ambon City of Peace",
+            "Taman Reklame (Depan Lapmer)",
+            "Taman Segitiga (Tanjakan Karpan)",
+            "Gong Perdamaian Dunia",
+            "Taman Transit (Negri Passo)",
+            "Taman Galala",
+            "Taman Belakang Soya (Taman Jerman)",
+            "Taman Gardu",
+            "Taman Nusa Apono",
+            "Bundaran Leimena",
+            "Taman Batu Merah",
+            "Taman Wainitu",
+
+
+            // === KECAMATAN SIRIMAU ===
+            "Kelurahan Ahusen",
+            "Kelurahan Amantelu",
+            "Kelurahan Batu Gajah",
+            "Kelurahan Batu Meja",
+            "Kelurahan Honipopu",
+            "Kelurahan Karang Panjang",
+            "Kelurahan Pandan Kasturi",
+            "Kelurahan Rijali",
+            "Kelurahan Silale",
+            "Kelurahan Uritetu",
+            "Kelurahan Waihoka",
+            "Desa Batu Merah",
+            "Desa Galala",
+            "Negeri Hative Kecil",
+            "Negeri Soya",
+
+            // === KECAMATAN NUSANIWE ===
+            "Kelurahan Benteng",
+            "Kelurahan Kudamati",
+            "Kelurahan Mangga Dua",
+            "Kelurahan Nusaniwe",
+            "Kelurahan Urimessing",
+            "Kelurahan Waihaong",
+            "Kelurahan Wainitu",
+            "Negeri Amahusu",
+            "Negeri Latuhalat",
+            "Negeri Nusaniwe",
+            "Negeri Seilale",
+            "Negeri Urimessing",
+
+            // === KECAMATAN BAGUALA ===
+            "Kelurahan Lateri",
+            "Desa Latta",
+            "Desa Nania",
+            "Desa Negeri Lama",
+            "Desa Waiheru",
+            "Negeri Halong",
+            "Negeri Passo",
+
+            // === KECAMATAN TELUK AMBON (Lokasi Anda) ===
+            "Kelurahan Tihu",
+            "Desa Hunuth/Durian Patah",
+            "Desa Poka",
+            "Desa Wayame",
+            "Negeri Hative Besar",
+            "Negeri Laha",
+            "Negeri Rumah Tiga",
+            "Negeri Tawiri",
+
+            // === KECAMATAN LEITIMUR SELATAN ===
+            "Negeri Ema",
+            "Negeri Hatalai",
+            "Negeri Hutumuri",
+            "Negeri Kilang",
+            "Negeri Leahari",
+            "Negeri Naku",
+            "Negeri Rutong"
+        ].sort(); // .sort() akan mengurutkan daftar ini secara alfabetis (A-Z) di UI nanti.
+
+        // 2. DOM Elements Selection
+        this.nodes = {
+            input: document.querySelector("#lokasi"),
+            list: document.querySelector("#lokasi-datalist"),
+            clear: document.querySelector("#clear-lokasi"),
+            starBtn: document.querySelector("#lokasi-stars"),
+            wrapper: document.querySelector("#lokasi-wrapper")
+        };
+
+        // Guard clause: Pastikan semua elemen ada di DOM
+        if (!this.nodes.input || !this.nodes.list) {
+            console.error("RobustDatalist: Required DOM elements missing.");
+            return;
+        }
+
+        // 3. State Management
+        this.state = {
+            favorites: JSON.parse(localStorage.getItem('fav_locations_v1')) || [],
+            isFavFilterActive: false,
+            focusedIndex: -1,
+            isOpen: false,
+            query: ""
+        };
+
+        // 4. Initialization
+        this.init();
+    }
+
+    init() {
+        this.setupAccessibility();
+        this.bindEvents();
+    }
+
+    // --- Core Logic & Rendering ---
+
+    render() {
+        let dataSource = /* this.nodes.input.value == "" ? this.state.favorites : */ this.state.isFavFilterActive ? this.state.favorites : this.ALL_LOCATIONS;
+        
+        // Filter Data
+        const filtered = dataSource.filter(item => 
+            item.toLowerCase().includes(this.state.query)
+        );
+
+        // Update UI State
+        this.nodes.clear.classList.toggle('dis-none', this.nodes.input.value.length === 0);
+        this.nodes.starBtn.classList.toggle('clr-yellow', this.state.isFavFilterActive);
+        this.nodes.starBtn.classList.toggle('clr-grey', !this.state.isFavFilterActive);
+
+        if (filtered.length > 0) {
+            this.nodes.list.innerHTML = filtered.map((item, index) => {
+                const isFav = this.state.favorites.includes(item);
+                const safeItem = this.escapeHTML(item);
+                const highlighted = this.highlightMatch(safeItem, this.escapeHTML(this.state.query));
+                
+                return `
+                <div class="flex-beetwen items-center p-10 pointer list-item border-bottom-grey ${index === this.state.focusedIndex ? 'lightgrey' : ''}" 
+                     data-value="${safeItem}" 
+                     data-index="${index}"
+                     role="option" 
+                     aria-selected="${index === this.state.focusedIndex}">
+                    <span class="location-text">${highlighted}</span>
+                    <i class="fas fa-star fav-toggle ${isFav ? 'clr-yellow' : 'clr-grey'}" data-location="${safeItem}" title="Toggle Favorite"></i>
+                </div>`;
+            }).join('');
+            this.toggleList(true);
+        } else {
+            this.nodes.list.innerHTML = "" //`<div class="p-15 clr-grey fz-14 text-center">Tidak ada lokasi ${this.state.isFavFilterActive ? 'favorit ' : ''}ditemukan</div>`;
+            this.toggleList(true);
+        }
+    }
+
+    toggleList(show) {
+        this.state.isOpen = show;
+        this.nodes.list.classList.toggle('dis-none', !show);
+        this.nodes.input.setAttribute('aria-expanded', show);
+        if (!show) this.state.focusedIndex = -1;
+    }
+
+    selectItem(value) {
+        this.nodes.input.value = value;
+        this.state.query = value.toLowerCase();
+        this.toggleList(false);
+        this.nodes.clear.classList.remove('dis-none');
+        this.nodes.input.dispatchEvent(new Event('change', { bubbles: true }));
+        this.nodes.input.focus();
+    }
+
+    toggleFavoriteItem(locationStr, event) {
+        event.stopPropagation(); // Cegah trigger selectItem
+        
+        if (this.state.favorites.includes(locationStr)) {
+            this.state.favorites = this.state.favorites.filter(fav => fav !== locationStr);
+        } else {
+            this.state.favorites.push(locationStr);
+        }
+        
+        localStorage.setItem('fav_locations_v1', JSON.stringify(this.state.favorites));
+        
+        // Jika sedang mode filter favorit dan item dihapus dari favorit, reset ke awal jika kosong
+        if (this.state.isFavFilterActive && this.state.favorites.length === 0) {
+            this.state.isFavFilterActive = false;
+        }
+        
+        this.render();
+    }
+
+    // --- Event Bindings ---
+
+    bindEvents() {
+        // 1. Input dengan Debouncing ringan untuk performa
+        let timeout;
+        this.nodes.input.addEventListener('input', (e) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                this.state.query = e.target.value.toLowerCase();
+                this.state.focusedIndex = -1; // Reset focus keyboard
+                this.render();
+            }, 150);
+        });
+
+        // 2. Clear Button
+        this.nodes.clear.addEventListener('click', () => {
+            this.nodes.input.value = "";
+            this.state.query = "";
+            this.state.focusedIndex = -1;
+            this.render();
+            this.nodes.input.focus();
+        });
+
+        // 3. Main Star Button (Mode Filter Favorit)
+        this.nodes.starBtn.addEventListener('click', () => {
+            this.state.isFavFilterActive = !this.state.isFavFilterActive;
+            this.state.focusedIndex = -1;
+            this.render();
+            
+            // Jika mematikan filter dan input kosong, tutup list
+            if (!this.state.isFavFilterActive && this.state.query === "") {
+                this.toggleList(false);
+            } else {
+                this.nodes.input.focus();
+            }
+        });
+
+        // 4. Focus & Click Outside
+        this.nodes.input.addEventListener('focus', () => this.render())
+
+        // Ultra Bulletproof Click Outside (Capture Phase)
+        document.addEventListener('click', (e) => {
+            if (!this.state.isOpen) return;
+
+            // Gunakan e.target.closest untuk melihat apakah klik berada di dalam wilayah id="komponen-lokasi"
+            const isInsideComponent = e.target.closest('#komponen-lokasi');
+
+            // Jika isInsideComponent adalah null, berarti klik murni terjadi di luar
+            if (!isInsideComponent) {
+                this.toggleList(false);
+            }
+        }, true); // <--- Parameter 'true' ini adalah kuncinya!
+
+        // 5. Event Delegation untuk List Item & Star Toggle
+        this.nodes.list.addEventListener('click', (e) => {
+            const favIcon = e.target.closest('.fav-toggle');
+            if (favIcon) {
+                this.toggleFavoriteItem(favIcon.dataset.location, e);
+                return;
+            }
+
+            const listItem = e.target.closest('.list-item');
+            if (listItem) {
+                this.selectItem(listItem.dataset.value);
+            }
+        });
+
+        // 6. Keyboard Navigation (Arrow Keys, Enter, Esc)
+        this.nodes.input.addEventListener('keydown', (e) => {
+            if (!this.state.isOpen) return;
+
+            const items = this.nodes.list.querySelectorAll('.list-item');
+            if (items.length === 0) return;
+
+            switch(e.key) {
+                case 'ArrowDown':
+                    e.preventDefault();
+                    this.state.focusedIndex = (this.state.focusedIndex + 1) % items.length;
+                    this.render();
+                    this.scrollToFocus(items);
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    this.state.focusedIndex = (this.state.focusedIndex - 1 + items.length) % items.length;
+                    this.render();
+                    this.scrollToFocus(items);
+                    break;
+                case 'Enter':
+                    e.preventDefault();
+                    if (this.state.focusedIndex > -1) {
+                        this.selectItem(items[this.state.focusedIndex].dataset.value);
+                    }
+                    break;
+                case 'Escape':
+                    e.preventDefault();
+                    this.toggleList(false);
+                    break;
+            }
+        });
+    }
+
+    // --- Utilities & Security ---
+
+    scrollToFocus(items) {
+        if (this.state.focusedIndex > -1 && items[this.state.focusedIndex]) {
+            items[this.state.focusedIndex].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+    }
+
+    escapeHTML(str) {
+        // Proteksi XSS Dasar
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    highlightMatch(text, term) {
+        if (!term) return text;
+        // Escape karakter spesial regex agar tidak error jika user mengetik karakter aneh
+        const safeTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`(${safeTerm})`, 'gi');
+        return text.replace(regex, `<strong class="clr-primary">$1</strong>`);
+    }
+
+    setupAccessibility() {
+        this.nodes.input.setAttribute('role', 'combobox');
+        this.nodes.input.setAttribute('aria-autocomplete', 'list');
+        this.nodes.input.setAttribute('aria-expanded', 'false');
+        this.nodes.input.setAttribute('aria-controls', 'lokasi-datalist');
+        this.nodes.list.setAttribute('role', 'listbox');
+    }
+}
+
+// Inisialisasi setelah DOM siap
+document.addEventListener('DOMContentLoaded', () => {
+    new RobustLocationDatalist();
+});

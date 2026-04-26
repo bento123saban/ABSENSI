@@ -143,11 +143,16 @@
     background-color: rgba(0, 0, 0, .05);
 }
 
-#lokasi-stars {
-    height: 45px;
-    width: 45px;
+#lokasi {
+    border: 2px solid wheat;
 }
-
+#lokasi-datalist {
+    scroll-behavior: smooth;
+    max-height: 400px;
+}
+#lokasi-stars {
+    width: 30px;
+}
 #lokasi-stars.active {
     background-color: #ffc107 !important;
     color: white !important;

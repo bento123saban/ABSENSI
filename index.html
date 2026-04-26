@@ -259,7 +259,7 @@
                     </div>  
 
                     <!-- Lanjutan Ctrl -->
-                    <div class="relative w-100 z-2 p-0 m-0">
+                    <div class="relative w-100 z-3 p-0 m-0">
                         <div id="lanjutan-ctrl" class="white p-15 dis-none">
                             <div id="lanjut-head" class="flex-beetwen gap-10 mb-20">
                                 <div class="relative grid-center">
@@ -396,18 +396,20 @@
                     <br>
 
                     <!-- Lokasi -->
-                    <div class="mb-3 ph-15 relative">
-                        <div class="flex-beetwen gap-10 items-end">
+                    <div class="mb-3 ph-15 relative pb-5">
+                        <div class="flex-beetwen gap-5 items-center">
                             <div class="relative w-100" id="lokasi-wrapper">
-                                <input type="text" id="lokasi" class="w-100 p-10 pr-40 borad-10 br-grey fz-16 mt-2" placeholder="Masukkan lokasi baru" autocomplete="off">
+                                <i class="fas fa-location-dot absolute-v left-5 clr-blue"></i>
+                                <input type="text" id="lokasi" class="pl-30 w-100 p-15 pr-40 borad-10 br-blue fz-18 clr-softblack transparent" placeholder="Lokasi kerja" autocomplete="off">
                                 <i class="fas fa-times-circle absolute-v right-10 fz-18 clr-grey pointer dis-none" id="clear-lokasi"></i>
                             </div>
-                            <i class="fas fa-star grid-center borad-5 yellow" id="lokasi-stars"></i>
+                            <i class="fas fa-star grid-center borad-5 clr-grey ph-5 dis-block" id="lokasi-stars"></i>
                         </div>
-                        <div id="lokasi-datalist" class="dis-none absolute left-15 right-15 top-100prc white borad-10 shadow-sm z-10 scroll" style="max-height: 300px;">
+                        <div id="lokasi-datalist" class="dis-none absolute left-15 right-15 top-100prc white borad-10 box-shadow z-2 scroll">
                             <!-- List will be injected by JS -->
                         </div>
                     </div>
+                    <br>
 
                     <!-- Photo Uploads -->
                     <div class="gap-10 ph-15 mb-1 dis-none" id="form-photos-box">

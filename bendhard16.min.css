@@ -674,7 +674,7 @@ body {
     border: none !important;
 }
 .lightgrey {
-    background: linear-gradient(45deg, lightgray, white);
+    background: linear-gradient(45deg, lightgray, white) !important;
     color: dimgray !important;
     border: none !important;
 }
