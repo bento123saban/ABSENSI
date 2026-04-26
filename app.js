@@ -1,6 +1,6 @@
 
 import Calendar from "./js/calendar";
-import { CustomMore, dashboardToggle, workFormLogic } from "./js/ui";
+import { CustomMore, CustomSelect, dashboardToggle, workFormLogic } from "./js/ui";
 
 import request from "./js/request";
 window.Request = new request();
@@ -9,8 +9,11 @@ window.Request = new request();
 const appCalendar = new Calendar();
 
 CustomMore();
+CustomSelect()
 dashboardToggle();
 workFormLogic();
+
+
 
 /**
  * Inisialisasi UI Kalender menggunakan class Calendar

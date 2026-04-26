@@ -23,11 +23,11 @@
         </div>
 
         <!-- Main -->
-        <div id="content" class="w-100 h-100 relative">
+        <div id="content" class="w-100 h-100 relative hidden">
 
             <nav class="w-100 h-100 green dis-none"></nav>
 
-            <main class="w-100 h-100 p-20">
+            <main class="w-100 h-100 p-20 scroll">
 
                 <!-- header -->
                 <header class="flex-beetwen relative">
@@ -40,39 +40,27 @@
                         </div>
                     </div>
                     <div id="head-cog">
-                        <!-- Detail More -->
-                        <div id="detail-more" class="grid-center relative more-box">
-                            <div class="flex-center flex-column gap-3 pointer more-icon p-10">
-                                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                            </div>
-                            <div class="more-list p-5 dis-none">
-                                <span>Update</span>
-                                <span>Refresh</span>
-                                <span>Log Out</span>
-                            </div>
-                            <input type="hidden" name="" class="more-input" id="header-more">
-                        </div>
-
-                        <!-- spinner -->
-                        <i class="fas fa-arrows-rotate spinning fz-30 dis-none" id="spinner-loader"></i>
+                        <i class="fas fa-cog spinning fz-24"></i>
                     </div>
                 </header>
                 <br>
 
-                <!-- Add button -->
-                <div class="borad-20 hidden relative glass-box flex-start">
-                    <div class="shimmer"></div>
-                    <div class="flex-beetwen w-100 p-15">
-                        <span><i class="fa-regular fa-cloud"></i>Online</span>
-                        <span><i class="fas fa-arrows-rotate"></i> 0 antrean</span>
-                    </div>
-                    <div class="grid-center p-10 h-100 blue aspect-square relative hidden pointer" id="add-work">
-                        <i class="fas fa-plus"></i>
+                <!-- Status & Add button -->
+                <div class=" relative  flex-start">
+                    <div class="flex-beetwen w-100 gap-10">
+                        <div class="flex-beetwen w-100 glass-box  p-15 borad-10 box-shadow hidden relative">
+                            <div class="shimmer"></div>
+                            <span class="bolder"><i class="fa-regular fa-cloud clr-green"></i> &nbsp; <span class="clr-grey">Online</span></span>
+                            <span class="bolder"><i class="fas fa-upload clr-blue"></i> &nbsp; <span class="clr-grey">0 antrean</span></span>
+                        </div>
+                        <div class="grid-center borad-10 relative hidden pointer aspect-square glass-box box-shadow" id="add-work">
+                            <div class="shimmer"></div>
+                            <i class="fas fa-plus"></i>
+                        </div>
                     </div>
                 </div>
-                
                 <br>
-                
+
                 <!-- Tugas -->
                 <!-- <div class="hidden borad-20" id="task-boxes">
                     <div id="on-task-boxes" class="dis-none p-15 red flex-beetwen w-100 h-100">
@@ -87,34 +75,35 @@
                     </div>
                 </div> -->
 
-                <div id="dashboard-data" class="hidden p-0 borad-20 box-shadow relative glass-box">
+                <!-- tanggal dan waktu -->
+                <div class="p-15 bolder fz-20 relative flex-beetwen borad-15 hidden glass-box" id="date-boxes">
                     <div class="shimmer"></div>
-                    
-                    <!-- tanggal dan waktu -->
-                    <div class="p-15 bolder blue fz-24 relative flex-beetwen br-grey" id="date-boxes">
-                        <div class="date-on flex-start gap-10 borad-15" id="date-controller">
-                            <!-- <i class="fas fa-calendar-alt"></i> -->
-                            <span class="dis-block">09</span>
-                            <span class="dis-block">APRIL</span>
-                            <span class="dis-block">2026</span>
-                        </div>
-                        <div class=" flex-start gap-30 fz-24">
-                            <i class="fas fa-chevron-left" id="box-date-prev"></i>
-                            <i class="fas fa-chevron-right" id="box-date-next"></i>
-                        </div>
+                    <div class="date-on flex-start gap-10 borad-15" id="date-controller">
+                        <!-- <i class="fas fa-calendar-alt"></i> -->
+                        <span class="dis-block">09</span>
+                        <span class="dis-block">APRIL</span>
+                        <span class="dis-block">2026</span>
                     </div>
+                    <div class=" flex-start gap-30 fz-24">
+                        <i class="fas fa-chevron-left" id="box-date-prev"></i>
+                        <i class="fas fa-chevron-right" id="box-date-next"></i>
+                    </div>
+                </div>
+                <br>
 
-                    <!-- absensi - rekap -->
-                    <div class="relative ph-15 pt-2" id="absen-boxes">
-                        <div class="flex-beetwen w-100 borad-10 pb-1 pointer" id="absen-box-head">
+                <!-- absensi - rekap -->
+                <div class="hidden p-0 borad-15 box-shadow relative glass-box">
+                    <div class="shimmer"></div>
+                    <div class="relative p-15">
+                        <div class="flex-beetwen w-100 borad-10 pointer" id="absen-box-head">
                             <div class="w-100">
                                 <span class="dis-block w-100 uppercase bolder fz-20 bolder">Absen buruh</span>
                                 <span class="">2 Buruh belum terabsen</span>
                             </div>
                             <i class="fas fa-circle-exclamation fz-30 clr-red"></i>
                         </div>
-                        <div class="flex-strech items-start flex-column gap-5 fz-18 dis-none" id="dash-absen-list">
-                            <div class="absen-group flex-beetwen w-100 bolder clr-green ">
+                        <div class="flex-strech items-start flex-column gap-3 fz-18 dis-none borad-15 hidden mt-1" id="dash-absen-list">
+                            <div class="absen-group flex-beetwen w-100 bolder clr-green">
                                 <span class="w-100"><i class="fas fa-check-circle"></i> &nbsp; Lorem Ipsum</span>
                                 <span class="clr-green">Kerja</span>
                             </div>
@@ -135,44 +124,45 @@
                                 <span class="clr-grey">Izin</span>
                             </div>
                         </div>
-                        <hr>
                     </div>
+                </div>
+                <br>
 
-
-                    <!-- kerja - rekap -->
-                    <div id="work-boxes" class="ph-15">
-                        <div class="flex-beetwen relative pb-1 pointer" id="work-box-head">
+                <!-- work - rekap -->
+                <div class="hidden p-0 borad-15 box-shadow relative glass-box">
+                    <div class="shimmer"></div>
+                    <div class="p-15 relative">
+                        <div class="flex-beetwen relative pointer " id="work-box-head">
                             <div>
-                                <span class="dis-block bolder fz-20 uppercase">KERJA</span>
+                                <span class="dis-block bolder fz-20 uppercase pb-1">KERJA</span>
                                 <span class="">5 Pekerjaan di 4 Lokasi</span>
                             </div>
                             <i class="fas fa-list-check fz-30 pointer clr-green"></i>
                         </div>
-                        <div id="dash-work-list" class="pl-15 flex-start items-start flex-column gap-10 dis-none">
+                        <div id="dash-work-list" class="pl-15 flex-start items-start flex-column gap-10 dis-none pt-1">
                             
                             <div class="work-group">
                                 <span class="fz-18 bolder fz-18">Respon Call 112</span>
-                                <p class="p-0 m-0 fz-14 cut-text"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
+                                <p class="p-0 m-0 fz-14 cut-text-2"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
                             </div>
 
                             <div class="work-group">
                                 <span class="fz-18 bolder fz-18">Respon Call 112</span>
-                                <p class="p-0 m-0 fz-14 cut-text"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
+                                <p class="p-0 m-0 fz-14 cut-text-2"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
                             </div>
 
                             <div class="work-group">
                                 <span class="fz-18 bolder fz-18">Respon Call 112</span>
-                                <p class="p-0 m-0 fz-14 cut-text"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
+                                <p class="p-0 m-0 fz-14 cut-text-2"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
                             </div>
                             
                         </div>
                     </div>
-                    <br>
                 </div>
                 <br>
 
                 <!-- Data -->
-                <div class="red p-15 borad-20 flex-beetwen relative hidden" id="data-boxes">
+                <div class="red p-15 borad-15 glass-box flex-beetwen relative hidden" id="data-boxes">
                     <div class="shimmer"></div>
                     <div>
                         <span class="dis-block bolder mb-1">DATA</span>
@@ -183,7 +173,7 @@
                 <br>
 
                 <!-- Kalender -->
-                <div id="calendar-box" class="relative glass-box p-20 borad-20 hidden">
+                <div id="calendar-box" class="relative glass-box p-20 borad-15 hidden">
 
                     <!-- Calendar Shimmer -->
                     <div class="shimmer"></div>
@@ -212,86 +202,233 @@
                     <div id="calendar-dates"></div>
                 </div>
 
-                <br>
             </main>
         </div>
 
         <!-- Form Input Work -->
-        <div id="work-form" class="dis-none fixed top-0 left-0 z-100">
-            <div class="p-20">
-                <div class="flex-beetwen mb-1">
-                    <h2 class="m-0">Input Data Kerja</h2>
-                    <i class="fas fa-times fz-30 pointer clr-red" id="close-work-form"></i>
-                </div>
-
-                
-                <div class="glass-box borad-20 box-shadow hidden relative">
+        <div id="work-form" class="z-2 vh-100 vw-100 clr-softblack">
+            <div id="close-work-form" class="absolute top-0 vh-100 vw-100"></div>
+            
+            <div class="ph-10 relative absolute bottom-0 w-100" id="work-form-content">
+                <div class="borad-top-20 box-shadow white scroll h-100 relative" id="work-form-data">
+                    
                     <!-- Date Slider Dummy -->
-                    <div id="form-date-slider" class="flex-beetwen p-15 blue">
+                    <div id="form-date-slider" class="flex-beetwen ph-15 pt-20 pb-15 box-shadow sticky top-0 z-3 white">
                         <i class="fas fa-chevron-left pointer"></i>
                         <span class="dis-block bolder fz-20 w-100 align-center">22 April 2026</span>
                         <i class="fas fa-chevron-right pointer"></i>
                     </div>
                     <br>
-
-                    <!-- Photo Uploads -->
-                    <div class="gap-10 ph-15 mb-1" id="form-photos-box">
-                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
-                            <i class="fas fa-camera fz-24"></i>
-                            <input type="file" accept="image/*" capture="environment" class="dis-none">
-                        </div>
-                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
-                            <i class="fas fa-camera fz-24"></i>
-                            <input type="file" accept="image/*" capture="environment" class="dis-none">
-                        </div>
-                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
-                            <i class="fas fa-camera fz-24"></i>
-                            <input type="file" accept="image/*" capture="environment" class="dis-none">
-                        </div>
-                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
-                            <i class="fas fa-camera fz-24"></i>
-                            <input type="file" accept="image/*" capture="environment" class="dis-none">
-                        </div>
-                    </div>
-
                     
-
-                    <!-- Jenis Kerja -->
-                    <div class="mb-3 mt-2 ph-15">
-                        <div class="mb-1 bolder flex-beetwen">
-                            <span>Jenis kerja</span>
-                            <label class="custom-checkbox flex-start items-end pointer">
-                                <input type="checkbox" id="is-continuation">
-                                <span class="checkmark bolder"></span>
-                                Lanjutan ?
-                            </label>
+                    <!-- Tipe & Jenis Kerja -->
+                    <div class="flex-beetwen gap-10 relative mh-15 items-center">
+                        <!-- Jenis Kerja -->
+                        <div id="" class="select-custom grid-centerborad-10 w-100 borad-10" data-background="grey">
+                            <div class="custom-select-container w-100" data-default="">
+                                <div class="select-trigger w-100 p-10">
+                                    <span>pilih jenis kerja</span>
+                                    <i class="arrow fas fa-chevron-right fz-14"></i>
+                                </div>
+                                <div class="select-options w-100">
+                                    <div class="option blue" data-value="lanjutan" data-clr="blue"><i class="fas fa-arrows-rotate"></i> &nbsp; Lanjutan</div>
+                                    <div class="option blue" data-value="112" data-clr="blue"><i class="fas fa-phone"></i> &nbsp; Respon Call 112</div>
+                                    <div class="option blue" data-value="mengawas" data-clr="blue"><i class="fas fa-arrow-right-to-bracket"></i> &nbsp; Mengawas</div>
+                                    <div class="option blue" data-value="work_01" data-clr="blue"><i class="fas fa-arrow-right-from-bracket"></i> &nbsp; Work 01</div>
+                                    <div class="option blue" data-value="work_02" data-clr="blue"><i class="fas fa-arrow-right-from-bracket"></i> &nbsp; Work 02</div>
+                                    <div class="option blue" data-value="work_03" data-clr="blue"><i class="fas fa-arrow-right-from-bracket"></i> &nbsp; Work 03</div>
+                                    <div class="option blue" data-value="work_04" data-clr="blue"><i class="fas fa-arrow-right-from-bracket"></i> &nbsp; Work 04</div>
+                                    <div class="option blue" data-value="work_05" data-clr="blue"><i class="fas fa-arrow-right-from-bracket"></i> &nbsp; Work 05</div>
+                                    <div class="option blue" data-value="other" data-clr="blue"><i class="fas fa-question"></i> &nbsp; Lainnya</div>
+                                </div>
+                                <input type="hidden" name="type" class="select-input w-100" id="jenis-value" value="">
+                            </div>
                         </div>
-                        <!-- Lanjutan -->
-                        <select id="continuation-id" class="w-100 p-10 borad-10 br-grey fz-16 mb-2 dis-none">
-                            <option value="" selected disabled>Pilih ID Kerja Sebelumnya</option>
-                            <option value="WRK001">WRK001 - Respon Call 112</option>
-                            <option value="WRK002">WRK002 - Patroli Siang</option>
-                        </select>
-                        <select class="w-100 p-10 borad-10 br-grey fz-16">
-                            <option value="" selected disabled>Pilih Jenis Kerja</option>
-                            <option value="1">Respon Call 112</option>
-                            <option value="2">Mengawas</option>
-                            <option value="3">Pengamanan Event</option>
-                        </select>
+                        <!-- Tipe Kerja -->
+                        <div id="" class="grid-center relative more-box ph-10">
+                            <div class="grid-center h-100">
+                                <div class="flex-center flex-column gap-3 pointer more-icon">
+                                    <span class="dot blue"></span><span class="dot blue"></span><span class="dot blue"></span>
+                                </div>
+                            </div>
+                            <div class="more-list p-5 dis-none">
+                                <span data-value="">Lapangan</span>
+                                <span data-value="">Kantor</span>
+                            </div>
+                            <input type="hidden" name="" class="more-input" id="header-more">
+                        </div>
+                    </div>  
+
+                    <!-- Lanjutan Ctrl -->
+                    <div class="relative w-100 z-2 p-0 m-0">
+                        <div id="lanjutan-ctrl" class="white p-15 dis-none">
+                            <div id="lanjut-head" class="flex-beetwen gap-10 mb-20">
+                                <div class="relative grid-center">
+                                    <i class="fas fa-calendar-alt blue grid-center fz-24 borad-10" id="lanjut-date-icon"></i>
+                                    <input type="date" name="" class="absolute bottom-0" id="lanjut-date-search">
+                                </div>
+                                <i class="fas fa-list-check dis-none blue grid-center fz-24 borad-10" id="lanjut-list-icon"></i>
+                                <div class="relative w-100">
+                                    <input type="text" name="lanjut-text-search" id="" class="clr-softblack p-15 pr-40 white fz-18 w-100 borad-10 dis-block br-blue" placeholder="Cari...">
+                                    <i class="fas fa-search absolute-v right-5 fz-20 grid-center clr-blue" id="lanjut-text-icon"></i>
+                                </div>
+                            </div>
+                            <div id="lanjut-list" class="flex-start flex-column gap-10 scroll">
+
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+<div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+<div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+<div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+<div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+                                <div class="lanjut-group relative p-10 w-100">
+                                    <span class="fz-10 absolute right-5 top-5">25-04</span>
+                                    <span class="dis-block cut-text-1 fz-24 mb-5 bolder">Respon Call 112</span>
+                                    <span class="dis-block cut-text-1 mb-5 italic">Pattimura park </span>
+                                    <p class="p-0 m-0 cut-text-2 align-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste reiciendis maiores doloribus assumenda dolorem, dolores nostrum et ipsa minima soluta unde. Eos enim quia, corporis cumque maiores ullam nesciunt illo.</p>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
+                    <br>
 
                     <!-- Lokasi -->
-                    <div class="mb-3 ph-15">
-                        <label class="dis-block mb-1 bolder">Lokasi</label>
-                        <select class="w-100 p-10 borad-10 br-grey fz-16" id="location-select">
-                            <option value="" selected disabled>Pilih Lokasi</option>
-                            <option value="loc1">Lokasi 01</option>
-                            <option value="loc2">Lokasi 02</option>
-                            <option value="other">Lainnya (Input manual)</option>
-                        </select>
-                        <input type="text" id="custom-location" class="w-100 p-10 borad-10 br-grey fz-16 mt-2 dis-none" placeholder="Masukkan lokasi baru">
+                    <div class="mb-3 ph-15 relative">
+                        <div class="flex-beetwen gap-10 items-end">
+                            <div class="relative w-100" id="lokasi-wrapper">
+                                <input type="text" id="lokasi" class="w-100 p-10 pr-40 borad-10 br-grey fz-16 mt-2" placeholder="Masukkan lokasi baru" autocomplete="off">
+                                <i class="fas fa-times-circle absolute-v right-10 fz-18 clr-grey pointer dis-none" id="clear-lokasi"></i>
+                            </div>
+                            <i class="fas fa-star grid-center borad-5 yellow" id="lokasi-stars"></i>
+                        </div>
+                        <div id="lokasi-datalist" class="dis-none absolute left-15 right-15 top-100prc white borad-10 shadow-sm z-10 scroll" style="max-height: 300px;">
+                            <!-- List will be injected by JS -->
+                        </div>
                     </div>
 
+                    <!-- Photo Uploads -->
+                    <div class="gap-10 ph-15 mb-1 dis-none" id="form-photos-box">
+                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
+                            <i class="fas fa-camera fz-24"></i>
+                            <input type="file" accept="image/*" capture="environment" class="dis-none">
+                        </div>
+                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
+                            <i class="fas fa-camera fz-24"></i>
+                            <input type="file" accept="image/*" capture="environment" class="dis-none">
+                        </div>
+                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
+                            <i class="fas fa-camera fz-24"></i>
+                            <input type="file" accept="image/*" capture="environment" class="dis-none">
+                        </div>
+                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
+                            <i class="fas fa-camera fz-24"></i>
+                            <input type="file" accept="image/*" capture="environment" class="dis-none">
+                        </div>
+                    </div>
+                    
                     <!-- Buruh Checklist -->
                     <div class="mb-4 ph-15">
                         <div class="mb-2 bolder flex-beetwen">
@@ -322,6 +459,8 @@
                 </div>
             </div>
         </div>
+
+        
 
     </div>
 

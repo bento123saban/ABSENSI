@@ -39,11 +39,11 @@ export function CustomMore ({elms, callback} = {}) {
         // Handle Klik Item
         spans.forEach(span => {
             span.addEventListener("click", () => {
-                if (span.classList.contains("grey")) return;
+                if (span.classList.contains("blue")) return;
 
                 // UI Update
-                spans.forEach(sp => sp.classList.remove("grey"));
-                span.classList.add("grey");
+                spans.forEach(sp => sp.classList.remove("blue"));
+                span.classList.add("blue");
                 
                 // Close List
                 list.classList.add("dis-none");
@@ -83,13 +83,101 @@ export function dashboardToggle() {
     if (workHead && workList) {
         workHead.addEventListener("click", () => {
             workList.classList.toggle("dis-none");
-            workHead.classList.toggle("pt-1");
         });
     }
 }
 
 export function absensiList () {
     
+}
+
+export function CustomSelect (selector = '.custom-select-container', callback = null) {
+    const allSelects = document.querySelectorAll(selector);
+    if (allSelects.length === 0) return;
+
+    const closeAllSelects = (exceptThisOne = null) => {
+    allSelects.forEach(select => {
+        if (select !== exceptThisOne) select.classList.remove('open');
+    });
+    };
+
+    allSelects.forEach(container => {
+        // Mencari elemen pendukung di dalam container ini
+        const trigger = container.querySelector('.select-trigger');
+        const triggerSpan = trigger?.querySelector('span');
+        const options = container.querySelectorAll('.option');
+        const hiddenInput = container.querySelector('.select-input');
+        
+        // MENCARI PARENT: Mencari container .select-custom terdekat dari elemen ini
+        const parentWrapper = container.closest('.select-custom');
+
+        // --- FUNGSI UPDATE CLR (Hanya untuk parent terkait) ---
+        const updateParentColor = (newClrClass) => {
+            if (!parentWrapper || !newClrClass) return;
+            // Tambahkan class warna yang baru
+            parentWrapper.dataset.background = newClrClass;
+        };
+
+        // --- FUNGSI UPDATE UI ---
+        const updateSelection = (option) => {
+            if (!option) return;
+
+            const val = option.getAttribute('data-value') || '';
+            const text = option.innerHTML;
+            const clrClass = option.getAttribute('data-clr');
+            hiddenInput.dataset.clr = clrClass
+
+            // 1. Update Span & Simpan data-value asli
+            if (triggerSpan) {
+                triggerSpan.innerHTML = text;
+                triggerSpan.setAttribute('data-value', val);
+                triggerSpan.className = triggerSpan.dataset.class
+            }
+
+            // 2. Update Hidden Input (untuk form submit)
+            if (hiddenInput) {
+                hiddenInput.value = val;
+                hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
+                hiddenInput.dataset.clr = clrClass
+            }
+
+            // 3. Update Visual Active State pada Opsi
+            options.forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+
+            // 4. Update Warna pada container utama (.select-custom)
+            updateParentColor(clrClass);
+        };
+
+        // --- INISIALISASI ---
+        if (!trigger) return;
+
+        // Set Default Value jika ada
+        const defaultValue = container.getAttribute('data-default') || hiddenInput?.value;
+        if (defaultValue) {
+            const defaultOpt = Array.from(options).find(opt => opt.getAttribute('data-value') === defaultValue);
+            if (defaultOpt) updateSelection(defaultOpt);
+        }
+
+        // --- EVENT LISTENERS ---
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeAllSelects(container);
+            container.classList.toggle('open');
+        });
+
+        options.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                updateSelection(option);
+                container.classList.remove('open');
+            });
+        });
+        // UI_log("Custom Select ✅")
+    });
+
+    // Klik di luar area select mana pun akan menutup semua dropdown
+    document.addEventListener('click', () => closeAllSelects());
 }
 
 export function workFormLogic() {
@@ -100,19 +188,42 @@ export function workFormLogic() {
     
     if (addWorkBtn && workForm) {
         addWorkBtn.onclick = () => {
-            workForm.classList.remove("dis-none");
-            if (content) content.classList.add("dis-none");
+            workForm.classList.add("active");
             document.body.style.overflow = "hidden"; // Prevent background scroll
         };
     }
 
     if (closeFormBtn && workForm) {
         closeFormBtn.onclick = () => {
-            workForm.classList.add("dis-none");
-            if (content) content.classList.remove("dis-none");
+            workForm.classList.remove("active");
             document.body.style.overflow = "auto";
         };
     }
+
+    const jenisWork = document.querySelector("#jenis-value")
+    const lanjut    = document.querySelector("#lanjutan-ctrl")
+
+    jenisWork.addEventListener("change", function () {
+        const value = this.value
+        console.log(this.value)
+        if (this.value.toUpperCase() == "LANJUTAN") lanjut.classList.remove("dis-none")
+        else lanjut.classList.add("dis-none")
+    })
+
+    const lanjutaDateIcon = document.querySelector("#lanjut-date-icon")
+    const lanjutaDateInput = document.querySelector("#lanjut-date-search")
+
+    lanjutaDateIcon.onclick = () => {
+        lanjutaDateIcon.classList.toggle("on")
+        if (lanjutaDateIcon.classList.contains("on")) lanjutaDateInput.showPicker()
+    }
+    lanjutaDateInput.onchange = function () {
+        if (this.value == "") return ""
+        return new Date(this.value).toLocaleDateString("id-ID", {date : "number", month : "long", year : "number"})
+    }
+    
+    const lanjutaTextIcon = document.querySelector("#lanjut-text-icon")
+    const lanjutaTextInput = document.querySelector("#lanjut-text-search")
 
     // Photo Input Logic
     const photoInputs = document.querySelectorAll(".photo-input");
@@ -133,31 +244,6 @@ export function workFormLogic() {
         };
     });
 
-    // Location Select Logic
-    const locationSelect = document.querySelector("#location-select");
-    const customLocation = document.querySelector("#custom-location");
-    if (locationSelect && customLocation) {
-        locationSelect.onchange = () => {
-            if (locationSelect.value === "other") {
-                customLocation.classList.remove("dis-none");
-            } else {
-                customLocation.classList.add("dis-none");
-            }
-        };
-    }
-
-    // Continuation Logic
-    const isContinuation = document.querySelector("#is-continuation");
-    const continuationId = document.querySelector("#continuation-id");
-    if (isContinuation && continuationId) {
-        isContinuation.onchange = () => {
-            if (isContinuation.checked) {
-                continuationId.classList.remove("dis-none");
-            } else {
-                continuationId.classList.add("dis-none");
-            }
-        };
-    }
 
     // Form Date Slider Dummy Logic
     const formDatePrev = document.querySelector("#form-date-slider i:first-child");
@@ -205,7 +291,143 @@ export function workFormLogic() {
             };
         }
     }
+
+    // Lokasi Custom Datalist Logic
+    const lokasiInput = document.querySelector("#lokasi");
+    const lokasiDatalist = document.querySelector("#lokasi-datalist");
+    const clearLokasi = document.querySelector("#clear-lokasi");
+    const lokasiStarsBtn = document.querySelector("#lokasi-stars");
+
+    // 1. Configuration & Data
+    const CONFIG = {
+        data: ["Jakarta", "Surabaya", "Bandung", "Medan", "Semarang", "Makassar", "Palembang", "Yogyakarta", "Bali"],
+        activeClass: 'bg-light-grey', // Ganti sesuai class hover CSS-mu
+        hideClass: 'dis-none'
+    };
+
+    // 2. Elements Selection
+    const nodes = {
+        input: document.querySelector("#lokasi"),
+        list: document.querySelector("#lokasi-datalist"),
+        clear: document.querySelector("#clear-lokasi"),
+        star: document.querySelector("#lokasi-stars"),
+        wrapper: document.querySelector("#lokasi-wrapper")
+    };
+
+    let currentIndex = -1;
+
+    // --- Helper Functions ---
+
+    const toggleList = (show) => {
+        nodes.list.classList.toggle(CONFIG.hideClass, !show);
+        if (!show) currentIndex = -1;
+    };
+
+    const renderList = (searchTerm = "") => {
+        const filtered = CONFIG.data.filter(item => 
+            item.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+        if (filtered.length > 0) {
+            nodes.list.innerHTML = filtered.map((item, idx) => `
+                <div class="p-10 pointer list-item border-bottom-grey" data-value="${item}">
+                    ${highlightMatch(item, searchTerm)}
+                </div>
+            `).join('');
+            toggleList(true);
+        } else {
+            nodes.list.innerHTML = `<div class="p-10 clr-grey fz-14">Tidak ada hasil ditemukan</div>`;
+            toggleList(searchTerm.length > 0);
+        }
+    };
+
+    const highlightMatch = (text, term) => {
+        if (!term) return text;
+        const regex = new RegExp(`(${term})`, 'gi');
+        return text.replace(regex, `<strong class="clr-primary">$1</strong>`);
+    };
+
+    // --- Core Logic ---
+
+    // Input Interaction
+    nodes.input.addEventListener('input', (e) => {
+        const val = e.target.value;
+        nodes.clear.classList.toggle(CONFIG.hideClass, val.length === 0);
+        renderList(val);
+    });
+
+    // Focus & Click
+    nodes.input.addEventListener('focus', () => {
+        if (nodes.input.value.length > 0) renderList(nodes.input.value);
+    });
+
+    // Keyboard Navigation (Robust System)
+    nodes.input.addEventListener('keydown', (e) => {
+        const items = nodes.list.querySelectorAll('.list-item');
+        
+        if (e.key === 'ArrowDown') {
+            currentIndex = (currentIndex + 1) % items.length;
+            updateSelection(items);
+            e.preventDefault();
+        } else if (e.key === 'ArrowUp') {
+            currentIndex = (currentIndex - 1 + items.length) % items.length;
+            updateSelection(items);
+            e.preventDefault();
+        } else if (e.key === 'Enter') {
+            if (currentIndex > -1) {
+                selectItem(items[currentIndex].dataset.value);
+            }
+            toggleList(false);
+        } else if (e.key === 'Escape') {
+            toggleList(false);
+        }
+    });
+
+    const updateSelection = (items) => {
+        items.forEach((el, idx) => {
+            el.classList.toggle('bg-light-grey', idx === currentIndex);
+            if(idx === currentIndex) el.scrollIntoView({ block: 'nearest' });
+        });
+    };
+
+    const selectItem = (val) => {
+        nodes.input.value = val;
+        nodes.clear.classList.remove(CONFIG.hideClass);
+        toggleList(false);
+        // Dispatch event custom jika dibutuhkan oleh sistem lain
+        nodes.input.dispatchEvent(new Event('change'));
+    };
+
+    // Event Delegation untuk List Item
+    nodes.list.addEventListener('click', (e) => {
+        const item = e.target.closest('.list-item');
+        if (item) selectItem(item.dataset.value);
+    });
+
+    // Clear Button
+    nodes.clear.addEventListener('click', () => {
+        nodes.input.value = "";
+        nodes.input.focus();
+        nodes.clear.classList.add(CONFIG.hideClass);
+        toggleList(false);
+    });
+
+    // Star Button (Toggle Favorite Logic)
+    nodes.star.addEventListener('click', () => {
+        nodes.star.classList.toggle('yellow');
+        nodes.star.classList.toggle('clr-grey');
+        // Logic tambahan untuk simpan favorite bisa di sini
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!nodes.wrapper.contains(e.target) && !nodes.list.contains(e.target)) {
+            toggleList(false);
+        }
+    });
+    
 }
+
 
 
 window.addEventListener("change", function(e) {
