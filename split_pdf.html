@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemisah PDF Offline (JS)</title>
+    <script src="pdf-lib.min.js"></script>
+    <script src="jszip.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 500px;
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        .drop-zone {
+            border: 2px dashed #e67e22;
+            padding: 30px 20px;
+            text-align: center;
+            background: #fffdfb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .drop-zone:hover {
+            background: #fdf2e9;
+            border-color: #d35400;
+        }
+        .info-box {
+            margin: 20px 0;
+            padding: 12px;
+            background: #e8f4fd;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #2c3e50;
+            display: none;
+        }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn:hover { background: #d35400; }
+        .btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>✂️ Pemisah PDF Per Halaman</h2>
+    
+    <div class="drop-zone" onclick="document.getElementById('pdf-input').click()">
+        <p id="drop-text" style="margin: 0; color: #7f8c8d;">Klik di sini untuk memilih 1 file PDF</p>
+        <input type="file" id="pdf-input" accept="application/pdf" style="display: none;" onchange="handleFile(event)">
+    </div>
+
+    <div class="info-box" id="info-box"></div>
+
+    <button id="split-btn" class="btn" onclick="splitPDF()" disabled>Pisahkan PDF</button>
+</div>
+
+<script>
+    let selectedFile = null;
+
+    function handleFile(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        selectedFile = file;
+        
+        // Tampilkan info file ke user
+        const infoBox = document.getElementById('info-box');
+        infoBox.style.display = 'block';
+        infoBox.innerHTML = `<strong>File terpilih:</strong> ${file.name}<br><small>Ukuran: ${(file.size / 1024 / 1024).toFixed(2)} MB</small>`;
+        
+        document.getElementById('drop-text').innerText = "Ganti file PDF";
+        document.getElementById('split-btn').disabled = false;
+    }
+
+    async function splitPDF() {
+        if (!selectedFile) return;
+
+        const btn = document.getElementById('split-btn');
+        btn.innerText = 'Sedang Memproses...';
+        btn.disabled = true;
+
+        try {
+            const arrayBuffer = await selectedFile.arrayBuffer();
+            const sourcePdf = await PDFLib.PDFDocument.load(arrayBuffer);
+            const totalPages = sourcePdf.getPageCount();
+            
+            // Inisialisasi ZIP library
+            const zip = new JSZip();
+            const originalName = selectedFile.name.replace('.pdf', '');
+
+            // Loop setiap halaman untuk dipisah menjadi file baru
+            for (let i = 0; i < totalPages; i++) {
+                const newPdf = await PDFLib.PDFDocument.create();
+                
+                // Salin halaman spesifik
+                const [copiedPage] = await newPdf.copyPages(sourcePdf, [i]);
+                newPdf.addPage(copiedPage);
+                
+                // Simpan halaman sebagai bytes
+                const pdfBytes = await newPdf.save();
+                
+                // Masukkan ke dalam folder ZIP virtual
+                const pageNum = String(i + 1).padStart(3, '0'); // Format jadi 001, 002, dst.
+                zip.file(`${originalName}_bagian_${pageNum}.pdf`, pdfBytes);
+            }
+
+            // Generate file ZIP dan buat auto-download
+            const zipBlob = await zip.generateAsync({ type: 'blob' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(zipBlob);
+            link.download = `${originalName}_terpisah.zip`;
+            link.click();
+
+            alert(`Sukses! PDF berhasil dipisah menjadi ${totalPages} halaman dan diunduh dalam bentuk ZIP.`);
+            
+            // Reset form
+            selectedFile = null;
+            document.getElementById('info-box').style.display = 'none';
+            document.getElementById('drop-text').innerText = "Klik di sini untuk memilih 1 file PDF";
+
+        } catch (error) {
+            alert('Aduh, gagal memproses PDF: ' + error.message);
+        } finally {
+            btn.innerText = 'Pisahkan PDF';
+            btn.disabled = false;
+        }
+    }
+</script>
+
+</body>
+</html>

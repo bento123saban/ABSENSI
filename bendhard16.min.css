@@ -169,6 +169,7 @@ body {
 .right-15 {right: 15px !important;}
 .right-20 {right: 20px !important;}
 .right-30 {right: 30px !important;}
+.right-35 {right: 35px !important;}
 .right-40 {right: 40px !important;}
 .right-50 {right: 50px !important;}
 .right-50prc {right: 50% !important;}
@@ -514,6 +515,7 @@ body {
 .pr-30 {padding-right: 30px !important;}
 .pr-40 {padding-right: 40px !important;}
 .pr-50 {padding-right: 50px !important;}
+.pr-60 {padding-right: 60px !important;}
 
 
 /* padding bottom set */
@@ -680,9 +682,16 @@ body {
 }
 
 
-.box-shadow {
+.box-shadow-1{
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+.box-shadow-2{
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+.box-shadow-3{
     box-shadow: 0 0 30px rgba(0,0,0,0.2);
 }
+
 .box-blur-4 {backdrop-filter: blur(4px);}
 .box-blur-5 {backdrop-filter: blur(5px);}
 .box-blur-10 {backdrop-filter: blur(10px);}

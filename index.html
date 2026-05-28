@@ -48,148 +48,53 @@
                 <!-- Status & Add button -->
                 <div class=" relative  flex-start">
                     <div class="flex-beetwen w-100 gap-10">
-                        <div class="flex-beetwen w-100 glass-box  p-15 borad-10 box-shadow hidden relative">
+                        <div class="flex-beetwen w-100 glass-box  p-15 borad-10 box-shadow-1 hidden relative">
                             <div class="shimmer"></div>
                             <span class="bolder"><i class="fa-regular fa-cloud clr-green"></i> &nbsp; <span class="clr-grey">Online</span></span>
                             <span class="bolder"><i class="fas fa-upload clr-blue"></i> &nbsp; <span class="clr-grey">0 antrean</span></span>
                         </div>
-                        <div class="grid-center borad-10 relative hidden pointer aspect-square glass-box box-shadow" id="add-work">
+                        <div class="grid-center borad-10 relative hidden pointer aspect-square glass-box box-shadow-1" id="add-work">
                             <div class="shimmer"></div>
                             <i class="fas fa-plus"></i>
                         </div>
                     </div>
                 </div>
                 <br>
-
-                <!-- Tugas -->
-                <!-- <div class="hidden borad-20" id="task-boxes">
-                    <div id="on-task-boxes" class="dis-none p-15 red flex-beetwen w-100 h-100">
-                        <div>
-                            <span class="dis-block bolder mb-1">TUGAS</span>
-                            <span>Anda memili 3 tugas</span>
-                        </div>
-                        <i class="fas fa-list-check fz-30 pointer"></i>
-                    </div>
-                    <div id="no-task-boxes" class="grey p-15 flex-start w-100 h-100">
-                        <span class="clr-grey bolder uppercase fz-20 ">Belum ada tugas</span>
-                    </div>
-                </div> -->
-
-                <!-- tanggal dan waktu -->
-                <div class="p-15 bolder fz-20 relative flex-beetwen borad-15 hidden glass-box" id="date-boxes">
-                    <div class="shimmer"></div>
-                    <div class="date-on flex-start gap-10 borad-15" id="date-controller">
-                        <!-- <i class="fas fa-calendar-alt"></i> -->
-                        <span class="dis-block">09</span>
-                        <span class="dis-block">APRIL</span>
-                        <span class="dis-block">2026</span>
-                    </div>
-                    <div class=" flex-start gap-30 fz-24">
-                        <i class="fas fa-chevron-left" id="box-date-prev"></i>
-                        <i class="fas fa-chevron-right" id="box-date-next"></i>
-                    </div>
-                </div>
-                <br>
-
-                <!-- absensi - rekap -->
-                <div class="hidden p-0 borad-15 box-shadow relative glass-box">
-                    <div class="shimmer"></div>
-                    <div class="relative p-15">
-                        <div class="flex-beetwen w-100 borad-10 pointer" id="absen-box-head">
-                            <div class="w-100">
-                                <span class="dis-block w-100 uppercase bolder fz-20 bolder">Absen buruh</span>
-                                <span class="">2 Buruh belum terabsen</span>
-                            </div>
-                            <i class="fas fa-circle-exclamation fz-30 clr-red"></i>
-                        </div>
-                        <div class="flex-strech items-start flex-column gap-3 fz-18 dis-none borad-15 hidden mt-1" id="dash-absen-list">
-                            <div class="absen-group flex-beetwen w-100 bolder clr-green">
-                                <span class="w-100"><i class="fas fa-check-circle"></i> &nbsp; Lorem Ipsum</span>
-                                <span class="clr-green">Kerja</span>
-                            </div>
-                            <div class="absen-group flex-beetwen w-100 bolder clr-grey ">
-                                <span class="w-100"><i class="fas fa-xmark-circle"></i> &nbsp; Lorem Ipsum</span>
-                                <span class="clr-grey">Libur</span>
-                            </div>
-                            <div class="absen-group flex-beetwen clr-red bolder w-100 uppercase">
-                                <span class="w-100"><i class="fas fa-circle-exclamation"></i> &nbsp; Lorem Ipsum</span>
-                                <span class="clr-red"><i class="fas fa-circle-exclamation"></i></span>
-                            </div>
-                            <div class="absen-group flex-beetwen clr-grey bolder w-100 ">
-                                <span class="w-100"><i class="fas fa-xmark-circle"></i> &nbsp; Lorem Ipsum</span>
-                                <span class="clr-grey">Sakit</span>
-                            </div>
-                            <div class="absen-group flex-beetwen clr-grey bolder w-100 ">
-                                <span class="w-100"><i class="fas fa-xmark-circle"></i> &nbsp; Lorem Ipsum</span>
-                                <span class="clr-grey">Izin</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-
-                <!-- work - rekap -->
-                <div class="hidden p-0 borad-15 box-shadow relative glass-box">
-                    <div class="shimmer"></div>
-                    <div class="p-15 relative">
-                        <div class="flex-beetwen relative pointer " id="work-box-head">
-                            <div>
-                                <span class="dis-block bolder fz-20 uppercase pb-1">KERJA</span>
-                                <span class="">5 Pekerjaan di 4 Lokasi</span>
-                            </div>
-                            <i class="fas fa-list-check fz-30 pointer clr-green"></i>
-                        </div>
-                        <div id="dash-work-list" class="pl-15 flex-start items-start flex-column gap-10 dis-none pt-1">
-                            
-                            <div class="work-group">
-                                <span class="fz-18 bolder fz-18">Respon Call 112</span>
-                                <p class="p-0 m-0 fz-14 cut-text-2"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
-                            </div>
-
-                            <div class="work-group">
-                                <span class="fz-18 bolder fz-18">Respon Call 112</span>
-                                <p class="p-0 m-0 fz-14 cut-text-2"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
-                            </div>
-
-                            <div class="work-group">
-                                <span class="fz-18 bolder fz-18">Respon Call 112</span>
-                                <p class="p-0 m-0 fz-14 cut-text-2"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                <br>
+                <!-- <div class="hr darkgrey"></div> -->
 
                 <!-- Data -->
-                <div class="red p-15 borad-15 glass-box flex-beetwen relative hidden" id="data-boxes">
+                <div class="red p-15 borad-15 glass-box flex-beetwen relative hidden gap-15 box-shadow-1" id="data-boxes">
                     <div class="shimmer"></div>
-                    <div>
-                        <span class="dis-block bolder mb-1">DATA</span>
-                        <span>Lengkapi data bulan April 2026</span>
+                    <i class="fas fa-calendar-day fz-40 pointer dis-none"></i>
+                    <div class="fz-16 w-100">
+                        <span class="dis-block bolder mb-5">Rabu, 16 Mei 2026</span>
+                        <span>Lengkapi data hari ini</span>
                     </div>
-                    <i class="fas fa-calendar-alt fz-30 pointer"></i>
+                    <i class="fas fa-circle-exclamation fz-40 pointer"></i>
                 </div>
-                <br>
+
+                <div class="hr darkgrey"></div>
 
                 <!-- Kalender -->
-                <div id="calendar-box" class="relative glass-box p-20 borad-15 hidden">
+                <div id="calendar-box" class="relative borad-20 hidden">
 
                     <!-- Calendar Shimmer -->
                     <div class="shimmer"></div>
                     
-                    <h3 class="uppercase align-center m-0 pb-1">Kalender Info</h3>
+                    <h3 class="uppercase align-center m-0">Kalender Info</h3>
+                    <br>
                     
                     <!-- Calendar Head -->
-                    <div class="flex-beetwen gap-15 w-100 mb-3" id="calendar-head">
+                    <div class="flex-beetwen items-center gap-15 w-100" id="calendar-head">
                         <i class="fas fa-chevron-left grid-center blue borad-10" id="calendar-prev"></i>
-                        <span class="dis-block w-100 align-center uppercase bolder clr-blue p-7 fz-20 borad-10" id="calendar-month">April 2026</span>
+                        <span class="dis-block align-center uppercase bolder clr-blue p-7 fz-20 borad-10" id="calendar-month">April 2026</span>
                         <i class="fas fa-chevron-right grid-center blue borad-10" id="calendar-next"></i>
                     </div>
+                    <br>
 
                     <!-- Calendar Days -->
-                    <div id="calendar-days" class="align-center mb-2">
-                        <span class="clr-red">Min</span>
+                    <div id="calendar-days" class="align-center">
+                        <span>Min</span>
                         <span>Sen</span>
                         <span>Sel</span>
                         <span>Rab</span>
@@ -197,10 +102,18 @@
                         <span>Jum</span>
                         <span>Sab</span>
                     </div>
+                    <br>
 
                     <!-- Calendar Dates -->
-                    <div id="calendar-dates"></div>
+                    <div id="calendar-dates" class="bolder p-2"></div>
                 </div>
+
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ducimus vero ab similique! Vitae voluptas blanditiis repudiandae fuga officiis cum deserunt aliquid quaerat ex, reiciendis consequuntur hic exercitationem illum accusamus?
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellat voluptatibus porro illum nisi deserunt. Fugit quo quisquam quas omnis ullam labore, molestiae perspiciatis numquam maxime! Accusamus corporis dolores explicabo labore.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam ex, fugiat quis adipisci voluptatem unde nemo facilis alias qui fuga, ullam aliquid excepturi nam et laborum eaque iste aliquam nihil!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, maxime soluta eos sapiente vel dicta ullam recusandae neque eveniet amet, magni vitae necessitatibus consequuntur eaque sunt enim. Odio, soluta nisi!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui voluptatum, repudiandae odio optio maxime sapiente atque possimus, nemo adipisci dicta, assumenda modi. Distinctio quisquam eius quasi nemo nulla velit modi!
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur, facere! Reprehenderit qui soluta odit nisi voluptatibus consequatur et cumque iusto dicta, quisquam atque dolor, reiciendis ducimus expedita non illo consectetur?  
 
             </main>
         </div>
@@ -210,10 +123,10 @@
             <div id="close-work-form" class="absolute top-0 vh-100 vw-100"></div>
             
             <div class="ph-10 relative absolute bottom-0 w-100" id="work-form-content">
-                <div class="borad-top-20 box-shadow white scroll h-100 relative" id="work-form-data">
+                <div class="borad-top-20 box-shadow-1 white hidden h-100 relative" id="work-form-data">
                     
                     <!-- Date Slider Dummy -->
-                    <div id="form-date-slider" class="flex-beetwen ph-15 pt-20 pb-15 box-shadow sticky top-0 z-3 white">
+                    <div id="form-date-slider" class="flex-beetwen ph-15 pt-20 pb-15 box-shadow-2 sticky top-0 z-3 white">
                         <i class="fas fa-chevron-left pointer"></i>
                         <span class="dis-block bolder fz-20 w-100 align-center">22 April 2026</span>
                         <i class="fas fa-chevron-right pointer"></i>
@@ -221,15 +134,28 @@
                     <br>
                     
                     <!-- Tipe & Jenis Kerja -->
-                    <div class="flex-beetwen gap-10 relative mh-15 items-center">
+                    <div class="flex-beetwen gap-10 relative p-0 mh-15 items-center">
                         <!-- Jenis Kerja -->
-                        <div id="" class="select-custom grid-centerborad-10 w-100 borad-10" data-background="grey">
-                            <div class="custom-select-container w-100" data-default="">
+                        <div id="" class="select-custom p-0 grid-center borad-10 w-100 box-shadow-1" data-background="white">
+                            <div class="custom-select-container w-100 flex-beetwen pr-0" data-default="">
                                 <div class="select-trigger w-100 p-10">
-                                    <span>pilih jenis kerja</span>
+                                    <span class="clr-blue"><i class="fas fa-question"></i> Jenis kerja</span>
                                     <i class="arrow fas fa-chevron-right fz-14"></i>
                                 </div>
-                                <div class="select-options w-100">
+                                <!-- Tipe Kerja -->
+                                <div id="tipe-kerja-more" class="grid-center relative more-box ph-5 z-9">
+                                    <div class="grid-center h-100">
+                                        <div class="flex-center flex-column gap-3 pointer more-icon hidden ph-15">
+                                            <span class="dot yellow"></span><span class="dot yellow"></span><span class="dot yellow"></span>
+                                        </div>
+                                    </div>
+                                    <div class="more-list p-5 dis-none glass-box clr-blue bolder" id="x">
+                                        <span data-value="">Lapangan</span>
+                                        <span data-value="">Kantor</span>
+                                    </div>
+                                    <input type="hidden" name="" class="more-input" id="header-more">
+                                </div>
+                                <div class="select-options w-100 z-4">
                                     <div class="option blue" data-value="lanjutan" data-clr="blue"><i class="fas fa-arrows-rotate"></i> &nbsp; Lanjutan</div>
                                     <div class="option blue" data-value="112" data-clr="blue"><i class="fas fa-phone"></i> &nbsp; Respon Call 112</div>
                                     <div class="option blue" data-value="mengawas" data-clr="blue"><i class="fas fa-arrow-right-to-bracket"></i> &nbsp; Mengawas</div>
@@ -243,24 +169,12 @@
                                 <input type="hidden" name="type" class="select-input w-100" id="jenis-value" value="">
                             </div>
                         </div>
-                        <!-- Tipe Kerja -->
-                        <div id="" class="grid-center relative more-box ph-10">
-                            <div class="grid-center h-100">
-                                <div class="flex-center flex-column gap-3 pointer more-icon">
-                                    <span class="dot blue"></span><span class="dot blue"></span><span class="dot blue"></span>
-                                </div>
-                            </div>
-                            <div class="more-list p-5 dis-none">
-                                <span data-value="">Lapangan</span>
-                                <span data-value="">Kantor</span>
-                            </div>
-                            <input type="hidden" name="" class="more-input" id="header-more">
-                        </div>
-                    </div>  
+                    </div>
+                    <br>
 
                     <!-- Lanjutan Ctrl -->
-                    <div class="relative w-100 z-3 p-0 m-0">
-                        <div id="lanjutan-ctrl" class="white p-15 dis-none">
+                    <div class="w-100 z-2 p-0 m-0" id="lanjutan-content">
+                        <div id="lanjutan-ctrl" class="white p-15">
                             <div id="lanjut-head" class="flex-beetwen gap-10 mb-20">
                                 <div class="relative grid-center">
                                     <i class="fas fa-calendar-alt blue grid-center fz-24 borad-10" id="lanjut-date-icon"></i>
@@ -268,8 +182,9 @@
                                 </div>
                                 <i class="fas fa-list-check dis-none blue grid-center fz-24 borad-10" id="lanjut-list-icon"></i>
                                 <div class="relative w-100">
-                                    <input type="text" name="lanjut-text-search" id="" class="clr-softblack p-15 pr-40 white fz-18 w-100 borad-10 dis-block br-blue" placeholder="Cari...">
+                                    <input type="text" id="lanjut-text-search" class="clr-softblack p-15 pr-60 white fz-18 w-100 borad-10 dis-block br-blue" placeholder="Cari...">
                                     <i class="fas fa-search absolute-v right-5 fz-20 grid-center clr-blue" id="lanjut-text-icon"></i>
+                                    <i class="fas fa-times-circle dis-block absolute-v right-35 clr-red z-3 dis-none" id="clear-lanjut"></i>
                                 </div>
                             </div>
                             <div id="lanjut-list" class="flex-start flex-column gap-10 scroll">
@@ -393,43 +308,53 @@
                             </div>
                         </div>
                     </div>
-                    <br>
 
                     <!-- Lokasi -->
-                    <div class="mb-3 ph-15 relative pb-5">
-                        <div class="flex-beetwen gap-5 items-center">
+                    <div class="ph-15 relative" id="komponen-lokasi">
+                        <div class="flex-beetwen gap-5 items-center white pv-15 pl-5 pr-30 borad-10 hidden relative box-shadow-1" id="lokasi-box">
                             <div class="relative w-100" id="lokasi-wrapper">
                                 <i class="fas fa-location-dot absolute-v left-5 clr-blue"></i>
-                                <input type="text" id="lokasi" class="pl-30 w-100 p-15 pr-40 borad-10 br-blue fz-18 clr-softblack transparent" placeholder="Lokasi kerja" autocomplete="off">
-                                <i class="fas fa-times-circle absolute-v right-10 fz-18 clr-grey pointer dis-none" id="clear-lokasi"></i>
+                                <input type="text" id="lokasi" class="pl-30 w-100 pr-40 borad-10 br-none fz-16 clr-white transparent" placeholder="Lokasi kerja" autocomplete="off">
+                                <i class="fas fa-times-circle absolute-v right-20 fz-18 clr-red pointer dis-none" id="clear-lokasi"></i>
                             </div>
-                            <i class="fas fa-star grid-center borad-5 clr-grey ph-5 dis-block" id="lokasi-stars"></i>
+                            <i class="fas fa-star grid-center ph-10 absolute-v right-20" id="lokasi-stars"></i>
                         </div>
-                        <div id="lokasi-datalist" class="dis-none absolute left-15 right-15 top-100prc white borad-10 box-shadow z-2 scroll">
+                        <div id="lokasi-datalist" class="dis-none absolute left-15 right-15 top-100prc white borad-10 box-shadow-1 z-2 scroll">
                             <!-- List will be injected by JS -->
                         </div>
                     </div>
                     <br>
 
-                    <!-- Photo Uploads -->
-                    <div class="gap-10 ph-15 mb-1 dis-none" id="form-photos-box">
-                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
-                            <i class="fas fa-camera fz-24"></i>
-                            <input type="file" accept="image/*" capture="environment" class="dis-none">
-                        </div>
-                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
-                            <i class="fas fa-camera fz-24"></i>
-                            <input type="file" accept="image/*" capture="environment" class="dis-none">
-                        </div>
-                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
-                            <i class="fas fa-camera fz-24"></i>
-                            <input type="file" accept="image/*" capture="environment" class="dis-none">
-                        </div>
-                        <div class="photo-input grid-center br-grey clr-grey borad-15 w-100 aspect-square relative pointer">
-                            <i class="fas fa-camera fz-24"></i>
-                            <input type="file" accept="image/*" capture="environment" class="dis-none">
+                    <!-- Deskripsi -->
+                    <div class="grid-center ph-15">
+                        <textarea name="deskripsi" rows="2" id="detail_lokasi" placeholder="detail lokasi kerja (optional)" class="white outline-none w-100 p-10 borad-10 br-none barlow fz-18 clr-blue box-shadow-1"></textarea>
+                    </div>
+                    <br>
+                    <i class="fas fa-word clr-black"></i>
+
+                    <!-- Foto -->
+                    <div class="flex-start">
+                        <div class="gap-10 ph-15 mb-1 flex-beetwen w-100 relative" id="form-photos-box">
+                            <div class="photo-input grid-center br-none box-shadow-1 clr-grey borad-15 w-100 aspect-square relative pointer">
+                                <i class="fas fa-camera fz-24"></i>
+                                <input type="file" accept="image/*" capture="environment" class="dis-none">
+                            </div>
+                            <div class="photo-input grid-center br-none box-shadow-1 clr-grey borad-15 w-100 aspect-square relative pointer">
+                                <i class="fas fa-camera fz-24"></i>
+                                <input type="file" accept="image/*" capture="environment" class="dis-none">
+                            </div>
+                            <div class="photo-input grid-center br-none box-shadow-1 clr-grey borad-15 w-100 aspect-square relative pointer">
+                                <i class="fas fa-camera fz-24"></i>
+                                <input type="file" accept="image/*" capture="environment" class="dis-none">
+                            </div>
+                            <div class="photo-input grid-center br-none box-shadow-1 clr-grey borad-15 w-100 aspect-square relative pointer">
+                                <i class="fas fa-camera fz-24"></i>
+                                <input type="file" accept="image/*" capture="environment" class="dis-none">
+                            </div>
                         </div>
                     </div>
+                    <br>
+
                     
                     <!-- Buruh Checklist -->
                     <div class="mb-4 ph-15">
@@ -457,7 +382,95 @@
                         </div>
                     </div>
 
-                    <button class="dis-block p-15 m-15 blue borad-20 fz-18 box-shadow">SIMPAN DATA</button>
+                    <button class="dis-block p-15 m-15 blue borad-20 fz-18 box-shadow-1">SIMPAN DATA</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="date-detail" class="dis-none">
+            <!-- tanggal dan waktu -->
+            <div class="p-15 bolder fz-20 relative flex-beetwen borad-15 hidden glass-box" id="date-boxes">
+                <div class="shimmer"></div>
+                <div class="date-on flex-start gap-10 borad-15" id="date-controller">
+                    <!-- <i class="fas fa-calendar-alt"></i> -->
+                    <span class="dis-block">09</span>
+                    <span class="dis-block">APRIL</span>
+                    <span class="dis-block">2026</span>
+                </div>
+                <div class=" flex-start gap-30 fz-24">
+                    <i class="fas fa-chevron-left" id="box-date-prev"></i>
+                    <i class="fas fa-chevron-right" id="box-date-next"></i>
+                </div>
+            </div>
+            <br>
+
+            <!-- absensi - rekap -->
+            <div class="hidden p-0 borad-15 box-shadow-1 relative glass-box">
+                <div class="shimmer"></div>
+                <div class="relative p-15">
+                    <div class="flex-beetwen w-100 borad-10 pointer" id="absen-box-head">
+                        <div class="w-100">
+                            <span class="dis-block w-100 uppercase bolder fz-20 bolder">Absen buruh</span>
+                            <span class="">2 Buruh belum terabsen</span>
+                        </div>
+                        <i class="fas fa-circle-exclamation fz-30 clr-red"></i>
+                    </div>
+                    <div class="flex-strech items-start flex-column gap-3 fz-18 dis-none borad-15 hidden mt-1" id="dash-absen-list">
+                        <div class="absen-group flex-beetwen w-100 bolder clr-green">
+                            <span class="w-100"><i class="fas fa-check-circle"></i> &nbsp; Lorem Ipsum</span>
+                            <span class="clr-green">Kerja</span>
+                        </div>
+                        <div class="absen-group flex-beetwen w-100 bolder clr-grey ">
+                            <span class="w-100"><i class="fas fa-xmark-circle"></i> &nbsp; Lorem Ipsum</span>
+                            <span class="clr-grey">Libur</span>
+                        </div>
+                        <div class="absen-group flex-beetwen clr-red bolder w-100 uppercase">
+                            <span class="w-100"><i class="fas fa-circle-exclamation"></i> &nbsp; Lorem Ipsum</span>
+                            <span class="clr-red"><i class="fas fa-circle-exclamation"></i></span>
+                        </div>
+                        <div class="absen-group flex-beetwen clr-grey bolder w-100 ">
+                            <span class="w-100"><i class="fas fa-xmark-circle"></i> &nbsp; Lorem Ipsum</span>
+                            <span class="clr-grey">Sakit</span>
+                        </div>
+                        <div class="absen-group flex-beetwen clr-grey bolder w-100 ">
+                            <span class="w-100"><i class="fas fa-xmark-circle"></i> &nbsp; Lorem Ipsum</span>
+                            <span class="clr-grey">Izin</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <!-- work - rekap -->
+            <div class="hidden p-0 borad-15 box-shadow-1 relative glass-box">
+                <div class="shimmer"></div>
+                <div class="p-15 relative">
+                    <div class="flex-beetwen relative pointer " id="work-box-head">
+                        <div>
+                            <span class="dis-block bolder fz-20 uppercase pb-1">KERJA</span>
+                            <span class="">5 Pekerjaan di 4 Lokasi</span>
+                        </div>
+                        <i class="fas fa-list-check fz-30 pointer clr-green"></i>
+                    </div>
+                    <div id="dash-work-list" class="pl-15 flex-start items-start flex-column gap-10 dis-none pt-1">
+                        
+                        <div class="work-group">
+                            <span class="fz-18 bolder fz-18">Respon Call 112</span>
+                            <p class="p-0 m-0 fz-14 cut-text-2"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
+                        </div>
+
+                        <div class="work-group">
+                            <span class="fz-18 bolder fz-18">Respon Call 112</span>
+                            <p class="p-0 m-0 fz-14 cut-text-2"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
+                        </div>
+
+                        <div class="work-group">
+                            <span class="fz-18 bolder fz-18">Respon Call 112</span>
+                            <p class="p-0 m-0 fz-14 cut-text-2"><b>Lokasi 01 : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores, perspiciatis natus expedita magnam quam! Quos pariatur, sit enim porro dolores dolore accusamus ullam sed labore, laboriosam ducimus quam nostrum?</p>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         </div>

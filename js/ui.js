@@ -5,36 +5,11 @@ export function CustomMore ({elms, callback} = {}) {
     const allMore   = document.querySelectorAll(selector);
     if (allMore.length === 0) return;
 
-    const startYear = 2026;
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const currentMonth = now.getMonth(); // 0-11
-
-    const closeAll = (exceptThisOne = null) => {
-        allMore.forEach(more => {
-            const list = more.querySelector(".more-list");
-            if (list && list !== exceptThisOne) {
-                list.classList.add('dis-none');
-            }
-        });
-    };
-
     allMore.forEach(more => {
         const icon  = more.querySelector(".more-icon");
         const list  = more.querySelector(".more-list");
         const spans = list.querySelectorAll("span");
         const hiden = more.querySelector(".more-input")
-
-        // Toggle Menu
-        icon.addEventListener("click", (e) => {
-            e.stopPropagation(); // Mencegah bubble ke document
-            const isHidden = list.classList.contains("dis-none");
-            closeAll(); // Tutup semua yang lain dulu
-            
-            if (isHidden) {
-                list.classList.remove("dis-none");
-            }
-        });
 
         // Handle Klik Item
         spans.forEach(span => {
@@ -59,47 +34,23 @@ export function CustomMore ({elms, callback} = {}) {
     });
 
     // Menutup menu jika klik di luar area menu mana pun
-    document.addEventListener('click', () => closeAll());
-    
-    // UI_log("Custom More ✅")
-}
-
-export function updateLoader () {
-    return document.querySelectorAll(".shimmer").forEach(elm => elm.classList.remove("dis-none"))
-}
-
-export function dashboardToggle() {
-    const absenHead = document.querySelector("#absen-box-head");
-    const absenList = document.querySelector("#dash-absen-list");
-    const workHead = document.querySelector("#work-box-head");
-    const workList = document.querySelector("#dash-work-list");
-
-    if (absenHead && absenList) {
-        absenHead.addEventListener("click", () => {
-            absenList.classList.toggle("dis-none");
-        });
-    }
-
-    if (workHead && workList) {
-        workHead.addEventListener("click", () => {
-            workList.classList.toggle("dis-none");
-        });
-    }
-}
-
-export function absensiList () {
-    
+    document.addEventListener('click', (e) => {
+        const elm = e.target
+        let param = true
+        if (elm.closest(".more-icon")) {
+            const more = elm.closest(".more-box")
+            const list = more.querySelector(".more-list")
+            if (list.classList.contains("dis-none")) list.classList.remove("dis-none")
+            else param = false
+        }
+        else param = false
+        if (!param) allMore.forEach(more => more.querySelector(".more-list").classList.add("dis-none"));
+    }, true);
 }
 
 export function CustomSelect (selector = '.custom-select-container', callback = null) {
     const allSelects = document.querySelectorAll(selector);
     if (allSelects.length === 0) return;
-
-    const closeAllSelects = (exceptThisOne = null) => {
-    allSelects.forEach(select => {
-        if (select !== exceptThisOne) select.classList.remove('open');
-    });
-    };
 
     allSelects.forEach(container => {
         // Mencari elemen pendukung di dalam container ini
@@ -159,12 +110,6 @@ export function CustomSelect (selector = '.custom-select-container', callback = 
             if (defaultOpt) updateSelection(defaultOpt);
         }
 
-        // --- EVENT LISTENERS ---
-        trigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            closeAllSelects(container);
-            container.classList.toggle('open');
-        });
 
         options.forEach(option => {
             option.addEventListener('click', (e) => {
@@ -177,8 +122,42 @@ export function CustomSelect (selector = '.custom-select-container', callback = 
     });
 
     // Klik di luar area select mana pun akan menutup semua dropdown
-    document.addEventListener('click', () => closeAllSelects());
+    document.addEventListener('click', (e) => {
+        const elm = e.target
+        let param = true
+        if (elm.closest(".select-trigger")) {
+            const container = elm.closest(".custom-select-container")
+            if (container.classList.contains("open")) param = false
+            else container.classList.add("open")
+        }
+        else param = false 
+        if (!param) allSelects.forEach(select => select.classList.remove('open'));
+    }, true);
 }
+
+export function updateLoader () {
+    return document.querySelectorAll(".shimmer").forEach(elm => elm.classList.remove("dis-none"))
+}
+
+export function dashboardToggle() {
+    const absenHead = document.querySelector("#absen-box-head");
+    const absenList = document.querySelector("#dash-absen-list");
+    const workHead = document.querySelector("#work-box-head");
+    const workList = document.querySelector("#dash-work-list");
+
+    if (absenHead && absenList) {
+        absenHead.addEventListener("click", () => {
+            absenList.classList.toggle("dis-none");
+        });
+    }
+
+    if (workHead && workList) {
+        workHead.addEventListener("click", () => {
+            workList.classList.toggle("dis-none");
+        });
+    }
+}
+
 
 export function workFormLogic() {
     const addWorkBtn = document.querySelector("#add-work");
@@ -201,17 +180,22 @@ export function workFormLogic() {
     }
 
     const jenisWork = document.querySelector("#jenis-value")
-    const lanjut    = document.querySelector("#lanjutan-ctrl")
+    const lanjut    = document.querySelector("#lanjutan-content")
+    const lanjutTextSearch  = document.querySelector("#lanjut-date-search")
 
     jenisWork.addEventListener("change", function () {
         const value = this.value
         console.log(this.value)
-        if (this.value.toUpperCase() == "LANJUTAN") lanjut.classList.remove("dis-none")
-        else lanjut.classList.add("dis-none")
+        if (this.value.toUpperCase() == "LANJUTAN") lanjut.classList.add("active")
+        else lanjut.classList.remove("active")
     })
 
-    const lanjutaDateIcon = document.querySelector("#lanjut-date-icon")
-    const lanjutaDateInput = document.querySelector("#lanjut-date-search")
+    const lanjutaDateIcon   = document.querySelector("#lanjut-date-icon")
+    const lanjutaDateInput  = document.querySelector("#lanjut-date-search")
+    
+    const lanjutaTextIcon   = document.querySelector("#lanjut-text-icon")
+    const lanjutaTextInput  = document.querySelector("#lanjut-text-search")
+    const lanjutTextClose   = document.querySelector("#clear-lanjut")
 
     lanjutaDateIcon.onclick = () => {
         lanjutaDateIcon.classList.toggle("on")
@@ -219,31 +203,56 @@ export function workFormLogic() {
     }
     lanjutaDateInput.onchange = function () {
         if (this.value == "") return ""
-        return new Date(this.value).toLocaleDateString("id-ID", {date : "number", month : "long", year : "number"})
+        const date  = new Date(this.value).getDate()
+        const month = new Date(this.value).toLocaleDateString("id-ID", {month : "long"})
+        const year  = new Date(this.value).getFullYear()
+        lanjutaTextInput.value = date.toString().padStart(2, "0") + " " + month + " " + year
     }
-    
-    const lanjutaTextIcon = document.querySelector("#lanjut-text-icon")
-    const lanjutaTextInput = document.querySelector("#lanjut-text-search")
+
+    lanjutaTextInput.onkeyup = function (e) {
+        if (this.value == "") lanjutTextClose.classList.add("dis-none")
+        else lanjutTextClose.classList.remove("dis-none")
+    }
+
+    lanjutTextClose.onclick = function () {
+        this.classList.add("dis-none")
+        lanjutTextSearch.value = ""
+    }
 
     // Photo Input Logic
     const photoInputs = document.querySelectorAll(".photo-input");
     photoInputs.forEach(div => {
         const input = div.querySelector("input");
-        div.onclick = () => input.click();
-        input.onchange = (e) => {
-            if (e.target.files && e.target.files[0]) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    div.style.backgroundImage = `url(${event.target.result})`;
-                    div.style.backgroundSize = "cover";
-                    div.style.backgroundPosition = "center";
-                    div.querySelector("i").classList.add("dis-none");
-                };
-                reader.readAsDataURL(e.target.files[0]);
-            }
-        };
-    });
+        div.onclick = (e) => {
+            if (e.target.classList.contains("fa-trash")) {
+            console.log(e.target)
 
+                const i = e.target
+                input.files = null
+                div.style.backgroundImage = "";
+                div.style.backgroundSize = "";
+                div.style.backgroundPosition = "";
+                i.classList.remove("fa-trash")
+                i.classList.add("fa-camera")
+            }
+            else {
+                input.click();
+                input.onchange = (e) => {
+                    if (e.target.files && e.target.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            div.style.backgroundImage = `url(${event.target.result})`;
+                            div.style.backgroundSize = "cover";
+                            div.style.backgroundPosition = "center";
+                            div.querySelector("i").classList.add("fa-trash");
+                            div.querySelector("i").classList.remove("fa-camera");
+                        };
+                        reader.readAsDataURL(e.target.files[0]);
+                    }
+                };
+            }
+        }
+    });
 
     // Form Date Slider Dummy Logic
     const formDatePrev = document.querySelector("#form-date-slider i:first-child");
@@ -309,6 +318,8 @@ window.addEventListener("change", function(e) {
         }
     }
 })
+
+
 
 /**
  * Advanced Custom Datalist with Favorite System & Accessibility
@@ -411,7 +422,8 @@ class RobustLocationDatalist {
             list: document.querySelector("#lokasi-datalist"),
             clear: document.querySelector("#clear-lokasi"),
             starBtn: document.querySelector("#lokasi-stars"),
-            wrapper: document.querySelector("#lokasi-wrapper")
+            wrapper: document.querySelector("#lokasi-wrapper"),
+            box: document.querySelector("#lokasi-box")
         };
 
         // Guard clause: Pastikan semua elemen ada di DOM
@@ -440,9 +452,10 @@ class RobustLocationDatalist {
 
     // --- Core Logic & Rendering ---
 
-    render() {
-        let dataSource = /* this.nodes.input.value == "" ? this.state.favorites : */ this.state.isFavFilterActive ? this.state.favorites : this.ALL_LOCATIONS;
-        
+    render(param = false) {
+        let dataSource = param ? this.ALL_LOCATIONS : this.state.isFavFilterActive ? this.state.favorites :  this.ALL_LOCATIONS /* this.nodes.input.value == "" ? this.state.favorites : this.state.isFavFilterActive ? this.state.favorites : */ 
+        dataSource = dataSource.length === 0 ? this.ALL_LOCATIONS : dataSource
+        console.log(dataSource)
         // Filter Data
         const filtered = dataSource.filter(item => 
             item.toLowerCase().includes(this.state.query)
@@ -484,12 +497,14 @@ class RobustLocationDatalist {
     }
 
     selectItem(value) {
+        this.nodes.box.classList.add("blue")
+        this.nodes.box.classList.remove("white")
         this.nodes.input.value = value;
         this.state.query = value.toLowerCase();
         this.toggleList(false);
         this.nodes.clear.classList.remove('dis-none');
         this.nodes.input.dispatchEvent(new Event('change', { bubbles: true }));
-        this.nodes.input.focus();
+        // this.nodes.input.focus();
     }
 
     toggleFavoriteItem(locationStr, event) {
@@ -521,17 +536,30 @@ class RobustLocationDatalist {
             timeout = setTimeout(() => {
                 this.state.query = e.target.value.toLowerCase();
                 this.state.focusedIndex = -1; // Reset focus keyboard
-                this.render();
+                this.render(true);
             }, 150);
         });
+
+        this.nodes.input.addEventListener("keyup", (e) => {
+            if (e.target.value == "") {
+                this.nodes.box.classList.remove("blue")
+                this.nodes.box.classList.add("white")
+                this.render()
+            } else {
+                this.nodes.box.classList.add("blue")
+                this.nodes.box.classList.remove("white")
+            }
+        })
 
         // 2. Clear Button
         this.nodes.clear.addEventListener('click', () => {
             this.nodes.input.value = "";
             this.state.query = "";
             this.state.focusedIndex = -1;
-            this.render();
+            this.render(true);
             this.nodes.input.focus();
+            this.nodes.box.classList.remove("blue")
+            this.nodes.box.classList.add("white")
         });
 
         // 3. Main Star Button (Mode Filter Favorit)
