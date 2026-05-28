@@ -108,8 +108,16 @@
 #work-form select:focus, #work-form input[type="text"]:focus {
     border-color: #3498db;
 }
+
+#form-photos-box {
+    height: calc(100% - 200px);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
 .photo-input {
     border: 2px solid ;
+    height: 100%;
 }
 .photo-input i.fa-trash {
     position: absolute;

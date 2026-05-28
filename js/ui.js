@@ -259,25 +259,6 @@ export function workFormLogic() {
     const formDateNext = document.querySelector("#form-date-slider i:last-child");
     const formDateText = document.querySelector("#form-date-slider .align-center");
 
-    // Select All Buruh Logic
-    const checkAllBuruh = document.querySelector("#check-all-buruh");
-    const buruhCheckboxes = document.querySelectorAll('input[name="buruh"]');
-
-    if (checkAllBuruh) {
-        checkAllBuruh.onchange = () => {
-            buruhCheckboxes.forEach(cb => {
-                cb.checked = checkAllBuruh.checked;
-            });
-        };
-
-        buruhCheckboxes.forEach(cb => {
-            cb.onchange = () => {
-                const allChecked = Array.from(buruhCheckboxes).every(c => c.checked);
-                checkAllBuruh.checked = allChecked;
-            };
-        });
-    }
-
     if (formDateText) {
         let dummyDate = new Date(2026, 3, 22); // April 22, 2026
         const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];

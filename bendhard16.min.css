@@ -557,7 +557,7 @@ body {
 .purple, [data-background="purple"] {
     background: linear-gradient(45deg, rebeccapurple,  purple) !important;
     color: white !important;
-    border: none !important;
+    border: none;
 }
 .clr-purple, [data-color="purple"] { color: purple !important;}
 .br-purple,  [data-border="purple"]{ border-color: purple !important;}
@@ -567,7 +567,7 @@ body {
 .blue, [data-background="blue"] {
     background: linear-gradient(45deg,#00699a, deepskyblue) !important;
     color: white !important;
-    border: none !important;
+    border: none;
 }
 .clr-blue, [data-color="blue"] { color: #008CCC !important;}
 .br-blue{border-color: deepskyblue !important;}
@@ -591,7 +591,7 @@ body {
 .darkpink, [data-background="dark-pink"] {
     background: linear-gradient(45deg, #FF002F, #730101) !important;
     color: white !important;
-    /* border:  none !important; */
+    border:  none;
 }
 .clr-darkpink, [data-color="darkpink"] {color: #FF002F !important;}
 .br-darkpink, [data-border="darkpink"] {border-color: #FF002F !important;}
@@ -619,7 +619,7 @@ body {
 .yellow, [data-background="yellow"] {
     background: linear-gradient(45deg, yellow, goldenrod) !important;
     color: black !important;
-    border: none !important;
+    border: none;
 }
 .clr-yellow, [data-color="yellow"] {color: #FFD700 !important;}
 .br-yellow, [data-border="yellow"] {border-color: #FFD700 !important;}
@@ -629,7 +629,7 @@ body {
 .black, [data-background="black"] {
     background: linear-gradient(45deg, #000, #333) !important;
     color: #ddd !important;
-    /* border: none !important; */
+    border: none;
 }
 .clr-black, [data-color="black"] {color: black !important;}
 .br-black, [data-border="black"] {border-color: black !important;}
@@ -637,7 +637,7 @@ body {
 .softblack, [data-background="softblack"] {
     background: linear-gradient(45deg, #444, #666) !important;
     color: #ddd !important;
-    /* border: none !important; */
+    border: none;
 }
 .clr-softblack, [data-color="softblack"] {color: #444 !important;}
 .br-softblack, [data-border="softblack"] {border-color: #444 !important;}
@@ -646,7 +646,7 @@ body {
 .orange, [data-background="orange"] {
     background: linear-gradient(45deg, orangered, orange) !important;
     color: white !important;
-    border: none !important;
+    border: none;
 }
 .clr-orange, [data-color="orange"] {color: orangered !important;}
 .br-orange, [data-border="orange"] {border-color: orangered !important;}
@@ -656,7 +656,7 @@ body {
 .white, [data-background="white"] {
     background: linear-gradient(45deg, #eee, white  );
     color: #444 !important;
-    border: none !important;
+    border: none;
 }
 .clr-white, [data-color="white"] {color: white !important;}
 .br-white, [data-border="white"] {border-color: white !important;}
@@ -666,22 +666,27 @@ body {
 .grey, [data-background="grey"] {
     background: linear-gradient(45deg, dimgrey, lightgrey);
     color: white !important;
-    border: none !important;
+    border: none;
 }
 .br-grey {border-color: dimgray !important;}
 .clr-grey {color: dimgray !important;}
 .darkgrey {
     background: linear-gradient(45deg, #666, rgb(177, 176, 176));
     color: white !important;
-    border: none !important;
+    border: none;
 }
 .lightgrey {
     background: linear-gradient(45deg, lightgray, white) !important;
     color: dimgray !important;
-    border: none !important;
+    border: none;
 }
 
-
+.box-shadow-default {
+    box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 10px 20px rgba(0, 0, 0, 0.04),
+    0 20px 40px rgba(0, 0, 0, 0.04);;
+}
 .box-shadow-1{
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
@@ -721,6 +726,13 @@ body {
 
 .br-none {border: none !important;}
 .outline-none {outline: none !important;}
+
+.br-solid-1 {border: 1px solid black;}
+.br-solid-2 {border: 2px solid black;}
+.br-solid-3 {border: 3px solid black;}
+.br-solid-4 {border: 4px solid black;}
+.br-solid-5 {border: 5px solid black;}
+
 
 .hr {
     height: 2px;
@@ -906,7 +918,7 @@ span.dot {
     width: 180px;
     backdrop-filter: blur(10px);
     padding: 20px;
-    z-index: 10000;
+    z-index: 10;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .1);
     display: flex;
