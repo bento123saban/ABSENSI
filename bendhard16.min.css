@@ -727,11 +727,11 @@ body {
 .br-none {border: none !important;}
 .outline-none {outline: none !important;}
 
-.br-solid-1 {border: 1px solid black;}
-.br-solid-2 {border: 2px solid black;}
-.br-solid-3 {border: 3px solid black;}
-.br-solid-4 {border: 4px solid black;}
-.br-solid-5 {border: 5px solid black;}
+.br-solid-1 {border: 1px solid grey;}
+.br-solid-2 {border: 2px solid grey;}
+.br-solid-3 {border: 3px solid grey;}
+.br-solid-4 {border: 4px solid grey;}
+.br-solid-5 {border: 5px solid grey;}
 
 
 .hr {

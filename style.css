@@ -1,8 +1,8 @@
 
 
 
-#container, #work-form {
-    width: clamp(380px, 100%, 430px);
+#container, #work-form-content {
+    width: clamp(380px, 100%, 430px) !important;
     height: 100vh;
     position: relative;
     overflow: auto !important;
@@ -77,9 +77,9 @@
 
 /* Work Form Styles */
 #work-form {
-    position: fixed;
+    position: absolute;
     top: 100%;
-    width: 100vw;
+    width: 100vw !important;
     left: 0;
     transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1);
 }
@@ -109,39 +109,251 @@
     border-color: #3498db;
 }
 
-#form-photos-box {
-    height: calc(100% - 200px);
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+.badge-count {
+    background: #007bff;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.selector-filter-wrapper {
+    display: flex;
+}
+.search-input-group {
+    position: relative;
+}
+.search-input-group input {
+    width: 100%;
+    outline: none;
+    font-size: 17px;
+}
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+.btn-star-filter {
+    /* background: #f1f5f9; */
+    /* border: 1px solid #cbd5e1; */
+    border-radius: 8px;
+    padding: 0 15px;
+    cursor: pointer;
+    color: #94a3b8;
+    transition: all 0.2s;
+}
+.btn-star-filter.active {
+    /* background: #fef3c7; */
+    border-color: #f59e0b;
+    color: #f59e0b;
+}
+
+
+/* Styling Zona Akses Cepat yang di-inject via JS */
+.starred-zone-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.05); /* Sedikit transparan biar masuk ke background white/dark */
+    border-radius: 10px;
+    margin-top: 12px;
+}
+.chip-worker-star {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f1f5f9;
+    border: 2px solid #cbd5e1;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    user-select: none;
+    color: #1e293b;
+    font-size: 14px;
+    transition: all 0.15s ease;
+}
+.chip-worker-star.selected {
+    background: #e0f2fe;
+    border-color: #0284c7;
+    color: #0369a1;
+}
+.chip-worker-star i {
+    color: #f59e0b;
+}
+
+/* Styling List Scroll Utama */
+.worker-list-scroll {
+    max-height: 55vh; /* Memanfaatkan vh-100 agar pas di layar HP */
+    overflow-y: auto;
+    margin-top: 15px;
+    border-radius: 10px;
+}
+.worker-item-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #1e293b;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.worker-item-card.selected {
+    background: #f0fdf4;
+}
+.worker-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.worker-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.worker-meta .name {
+    font-weight: bold;
+    display: block;
+}
+.worker-meta .role {
+    font-size: 12px;
+    color: #64748b;
+}
+.icon-star-toggle {
+    font-size: 18px;
+    color: #cbd5e1;
+    cursor: pointer;
+}
+.icon-star-toggle.starred {
+    color: #f59e0b;
+}
+
+/* State Aktif untuk Tombol Filter Bintang di HTML Lu */
+#btn-filter-starred.active i {
+    color: #f59e0b !important;
+}
+/* List Wrapper Scrollable */
+.worker-list-scroll {
+    height: calc(100vh - 320px) !important;
+    overflow-y: auto;
+    border-radius: 8px;
+}
+
+/* Worker Card Item */
+.worker-item-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15px;
+    border-bottom: 1px solid #f1f5f9;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+}
+.worker-item-card:hover, .worker-item-card.selected {
+    background: #f8fafc;
+}
+.worker-item-card.selected {
+    background: #f0fdf4; /* Background hijau tipis jika terpilih */
+}
+.worker-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+.worker-meta .name {
+    font-weight: 600;
+    display: block;
+    color: #1e293b;
+}
+.worker-meta .role {
+    font-size: 11px;
+    color: #64748b;
+    background: #e2e8f0;
+    padding: 1px 6px;
+    border-radius: 4px;
+}
+.worker-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Checkbox & Star Custom Styling */
+.worker-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.icon-star-toggle {
+    font-size: 18px;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+.icon-star-toggle:hover { transform: scale(1.1); }
+.icon-star-toggle.starred {
+    color: #f59e0b;
+}
+.btn-primary-field {
+    border: none;
+    padding: 12px 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.3);
+}
+
+.btn-primary-field:active {
+    background: #0369a1;
+    transform: scale(0.98);
+}
+
+
+
+
+#foto-box {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    /* transition: 1s all cubic-bezier(0.175, 0.885, 0.32, 1); */
 }
 .photo-input {
-    border: 2px solid ;
-    height: 100%;
+    border: 2px solid lightgray !important;
+    aspect-ratio: .7;
+    width: calc(50% - 5px);
 }
-.photo-input i.fa-trash {
+.photo-input i.fa-close {
     position: absolute;
     right: 3px;
     bottom: 3px;
-    /* transform: translate(-50%, -50%) scale(.75); */
-    /* height: 30px; */
-    /* width: 30px; */
-    /* background-color: red; */
-    /* overflow: hidden; */
-    color: red !important;
+    color: white !important;
+    background-color: red;
+    width: 20px;
+    height: 20px;
+    border-radius: 7px;
+    padding: 5px;
     display: grid;
     place-items: center;
-    font-size: 16px !important;
+    font-size: 10px !important;
 }
 
 #lanjutan-content {
     position: absolute !important;
-    top: 102% !important;
-    left: 0;
-    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1);
-}
-#lanjutan-content.active {
-    top: 130px !important;
+    left: 0 !important;
+    top: 130px;
+    /* transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1); */
 }
 #lanjutan-ctrl {
     width: 100%;
@@ -205,7 +417,7 @@
     outline: 1.3px solid #3498db !important;
     /* transition: all 1s linear; */
 }
-#detail_lokasi::placeholder {
+#detail_lokasi::placeholder, #keterangan::placeholder {
     font-style: italic;
     color: #aaa;
 }

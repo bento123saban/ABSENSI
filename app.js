@@ -1,7 +1,6 @@
 
 import Calendar from "./js/calendar";
-import { CustomMore, CustomSelect, dashboardToggle, workFormLogic } from "./js/ui";
-
+import { CustomMore, CustomSelect, dashboardToggle, workFormLogic, RobustLocationDatalist } from "./js/ui";
 import request from "./js/request";
 window.Request = new request();
 
@@ -12,8 +11,6 @@ CustomMore();
 CustomSelect()
 dashboardToggle();
 workFormLogic();
-
-
 
 /**
  * Inisialisasi UI Kalender menggunakan class Calendar
@@ -90,6 +87,12 @@ function initCalendarUI() {
     render();
 }
 
-initCalendarUI();
+// Inisialisasi setelah DOM siap
+document.addEventListener('DOMContentLoaded', () => {
+    initCalendarUI();
+    new RobustLocationDatalist();
+    workFormLogic()
+});
+
 
 setTimeout(() => document.querySelectorAll(".shimmer").forEach(elm => elm.classList.add("dis-none")), 1500)
