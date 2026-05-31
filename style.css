@@ -75,31 +75,44 @@
 
 
 
-/* Work Form Styles */
+/* Container Utama Form - Glassmorphism & Slide Up */
 #work-form {
-    position: absolute;
-    top: 100%;
-    width: 100vw !important;
-    left: 0;
-    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1);
-}
-#work-form.active {
+    position: fixed;
     top: 0;
+    left: 0;
+    visibility: hidden;
+    transition: visibility 1s;
+}
+/* State Aktif (saat form muncul) */
+#work-form.active {
+    visibility: visible;
 }
 #close-work-form {
-    background-color: rgba(150, 150, 150, 0);
+    background-color: transparent;
     transition: all .4s linear;
-    transition-delay: .6s;
+    backdrop-filter: blur(0);
+    /* transition-delay: .6s; */
 }
 #work-form.active #close-work-form {
-    background-color: rgba(200, 200, 200, .9);
+    backdrop-filter: blur(2px);
+    background: rgba(0, 0, 0, 0.5);
 }
 #work-form-content {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 90px);
+    bottom: -100vh;
+    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1);
 }
-#work-form-data {
-    background-position: center;
-    background-size: cover;
+#work-form.active #work-form-content {
+    bottom: 0;
+}
+#form-slide {
+    width: 100% !important;
+    display: grid;
+    grid-template-columns: repeat(2, 100%);
+}
+.slide-box {
+    height: 100%;
+    overflow: hidden;
 }
 #work-form select, #work-form input[type="text"] {
     border: 1px solid #ddd;
@@ -109,6 +122,15 @@
     border-color: #3498db;
 }
 
+
+/* Buruh */
+#buruh-box {
+    /* height: ; */
+}
+#buruh-list {
+    height: 500px !important;
+
+}
 .badge-count {
     background: #007bff;
     color: #fff;
@@ -149,15 +171,12 @@
     border-color: #f59e0b;
     color: #f59e0b;
 }
-
-
 /* Styling Zona Akses Cepat yang di-inject via JS */
 .starred-zone-chips {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     padding: 10px 15px;
-    background: rgba(255, 255, 255, 0.05); /* Sedikit transparan biar masuk ke background white/dark */
     border-radius: 10px;
     margin-top: 12px;
 }
@@ -183,14 +202,7 @@
 .chip-worker-star i {
     color: #f59e0b;
 }
-
 /* Styling List Scroll Utama */
-.worker-list-scroll {
-    max-height: 55vh; /* Memanfaatkan vh-100 agar pas di layar HP */
-    overflow-y: auto;
-    margin-top: 15px;
-    border-radius: 10px;
-}
 .worker-item-card {
     display: flex;
     align-items: center;
@@ -235,13 +247,6 @@
 #btn-filter-starred.active i {
     color: #f59e0b !important;
 }
-/* List Wrapper Scrollable */
-.worker-list-scroll {
-    height: calc(100vh - 320px) !important;
-    overflow-y: auto;
-    border-radius: 8px;
-}
-
 /* Worker Card Item */
 .worker-item-card {
     display: flex;
@@ -282,7 +287,6 @@
     align-items: center;
     gap: 15px;
 }
-
 /* Checkbox & Star Custom Styling */
 .worker-checkbox {
     width: 20px;
@@ -313,12 +317,11 @@
     transition: background 0.2s;
     box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.3);
 }
-
 .btn-primary-field:active {
     background: #0369a1;
     transform: scale(0.98);
 }
-
+/* buruh */
 
 
 
