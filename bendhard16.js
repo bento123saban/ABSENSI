@@ -1425,7 +1425,7 @@ async function jalankanSemuaUjiCoba() {
  * ====================================================================
  * Fokus: Integrasi Idempotency-Key UUID & Fingerprint Anti-Barbar
  */
-class ApexRequest {
+export class ApexRequest {
     static baseURL = 'https://maku.dlhpambon2025.workers.dev'; // Base URL Proyek MAKU Lu
     static timeoutMs = 10000;    
            
@@ -1689,7 +1689,7 @@ class ApexRequest {
 }
 
 
-class ApexHttp {
+export class ApexHttp {
     static baseURL = 'https://maku.dlhpambon2025.workers.dev';
     static maxConcurrentRequests = 3;
     static storeName = 'offline_requests';
@@ -1822,6 +1822,29 @@ class ApexHttp {
         return await this._execute('POST', url, data, options);
     }
 }
+
+/*
+    // import ApexHttp from './ApexHttp.js';
+
+    // async function handleSubmitLaporan(dataLaporan) {
+    //     console.log("Mengirim laporan...");
+
+    //     // Opsi reUpload: true adalah kunci "Anti-Mati"
+    //     const result = await ApexHttp.post('/api/laporan', dataLaporan, {
+    //         reUpload: true, // Jika gagal, simpan ke IndexedDB
+    //         headers: { 'Authorization': 'Bearer token_user' }
+    //     });
+
+    //     if (result.status === 'QUEUED') {
+    //         alert("Sinyal lemot! Data sudah diamankan di antrean offline. Akan dikirim otomatis jika sinyal balik.");
+    //     } else if (result.success) {
+    //         alert("Data berhasil terkirim ke server pusat!");
+    //     } else {
+    //         alert("Gagal total: " + result.message);
+    //     }
+    // }
+*/
+
 
 
 

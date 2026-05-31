@@ -1,4 +1,4 @@
-import { ApexAlert, ApexHttp} from "../bendhard16.min";
+// import {ApexAlert, ApexHttp} from "./bendhard16";
 
 
 export function CustomMore ({elms, callback} = {}) {
@@ -159,15 +159,176 @@ export function dashboardToggle() {
     }
 }
 
+export class WorkFormController {
+    constructor() {
+        // 1. Kumpulkan semua elemen DOM yang dibutuhkan (Nodes)
+        this.nodes = {
+            workForm: document.querySelector("#work-form"), // Sesuaikan ID form utama lu
+            formClose: document.querySelector("#close-work-form"),
+            btnSave: document.querySelector("#btn-save"),   // Sesuaikan ID tombol simpan
+            
+            dateText: document.querySelector("#form-date-slider .align-center"),
+            jenisWork: document.querySelector("#jenis-value"),
+            moreInput: document.querySelector("#header-more"),
+            lanjutContent: document.querySelector("#lanjutan-content")
+            
+        };
 
-/**
- * 🚀 SUPER ADVANCE PHOTO UPLOADER MANAGER
- * Class ini diletakkan di luar agar tidak didefinisikan berulang kali 
- * saat workFormLogic dipanggil berkali-kali.
- */
+        // 2. Inisialisasi Modul/Class Pendukung (Sesuaikan dengan nama class lu)
+        // this.selectorBuruh = new WorkerSelector(); // Contoh pemanggilan class buruh
+        // this.photoManager = new PhotoManager();    // Contoh pemanggilan class foto
+
+        // 3. Panggil fungsi Custom UI bawaan lu secara langsung (Pastikan script-nya udah ter-load)
+        if (typeof CustomSelect === "function") {
+            CustomSelect('.custom-select-container');
+        }
+        
+        if (typeof CustomMore === "function") {
+            CustomMore({ elms: ".more-box" });
+        }
+
+        // 4. Pasang semua event listener
+        this._bindEvents();
+        new RobustLocationDatalist()
+        new AdvancedWorkerSelector()
+        new AdvancedPhotoManager()
+    }
+
+    _bindEvents() {
+        // 1. Tombol Buka Form Utama (Updated pakai add-work)
+        const btnOpenForm = document.querySelector("#add-work"); // Ganti pakai ".add-work" kalau di HTML lu itu class
+        
+        if (btnOpenForm && this.nodes.workForm) {
+            btnOpenForm.addEventListener("click", () => {
+                this.nodes.workForm.classList.add("active");
+                document.body.style.overflow = "hidden"; // Kunci scroll background
+            });
+        }
+
+        // 2. Tombol Tutup Form
+        const btnCloseForm = document.querySelector(".btn-close");
+        if (btnCloseForm && this.nodes.workForm) {
+            btnCloseForm.addEventListener("click", () => {
+                this.nodes.workForm.classList.remove("active");
+                document.body.style.overflow = "auto"; // Kembalikan scroll
+            });
+        }
+
+        // 3. Tombol Simpan -> Panggil _handleSave
+        if (this.nodes.btnSave) {
+            this.nodes.btnSave.addEventListener("click", () => {
+                this._handleSave();
+            });
+        }
+
+        // 4. Deteksi Perubahan Jenis Kerja untuk Menampilkan Konten Lanjutan
+        const inputJenis = document.querySelector("#jenis-value");
+        const lanjutContent = document.querySelector("#lanjutan-content");
+
+        if (inputJenis && lanjutContent) {
+            inputJenis.addEventListener("change", (e) => {
+                const val = e.target.value.toLowerCase();
+                if (val === "lanjutan") {
+                    lanjutContent.classList.remove("dis-none");
+                } else {
+                    lanjutContent.classList.add("dis-none");
+                }
+            });
+        }
+
+        this.nodes.formClose.onclick = () => this.nodes.workForm.classList.remove("active")
+    }
+
+    _changeDate(delta) {
+        if (!this.nodes.dateText) return;
+        this.dummyDate.setDate(this.dummyDate.getDate() + delta);
+        const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        this.nodes.dateText.textContent = `${this.dummyDate.getDate().toString().padStart(2, "0")} ${months[this.dummyDate.getMonth()]} ${this.dummyDate.getFullYear()}`;
+    }
+
+    async _handleSave() {
+        // 1. Validasi buruh (Minimal 1 buruh harus dipilih)
+        const buruhIds = this.selectorBuruh ? this.selectorBuruh.getSelectedWorkerIds() : [];
+        
+        if (buruhIds.length === 0) {
+            await ApexAlert.error('Error', 'Pilih minimal 1 buruh!');
+            return;
+        }
+
+        // --- TAMBAHAN: Validasi Lokasi ---
+        const inputLokasi = document.querySelector("#lokasi");
+        const lokasiValue = inputLokasi ? inputLokasi.value.trim() : "";
+        
+        if (lokasiValue === "") {
+            await ApexAlert.error('Error', 'Lokasi kerja wajib diisi!');
+            if (inputLokasi) inputLokasi.focus();
+            return;
+        }
+        // ---------------------------------
+
+        // 2. Konfirmasi sebelum menyimpan
+        const yakin = await ApexAlert.confirm('Simpan Laporan?', 'Data akan masuk antrean.');
+        if (!yakin) return;
+
+        try {
+            // 3. Animasi Loading pada Tombol Simpan
+            if (this.nodes.btnSave) {
+                this.nodes.btnSave.disabled = true;
+                this.nodes.btnSave.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Processing...`;
+            }
+
+            // 4. AMBIL VALUE LANGSUNG DARI DOM SAAT KLIK SAVE
+            const jenisKerjaValue = document.querySelector("#jenis-value")?.value || ""; 
+            const tipeKerjaValue  = document.querySelector("#header-more")?.value || "";  
+
+            // 5. Susun Payload Data
+            const payload = {
+                tanggal: this.nodes.dateText ? this.nodes.dateText.textContent : '',
+                jenisKerja: jenisKerjaValue, 
+                tipeKerja: tipeKerjaValue,
+                lokasi: lokasiValue, // <--- LOKASI DIMASUKKAN KE PAYLOAD
+                buruh: this.selectorBuruh ? this.selectorBuruh.getSelectedWorkersData() : [],
+                foto: this.photoManager ? this.photoManager.getAllFiles() : [],
+                keterangan: document.querySelector("#keterangan")?.value || ""
+            };
+
+            // 6. Eksekusi pengiriman data
+            await forceQueueData(payload);
+            
+            // 7. Reset Form dan UI setelah sukses
+            if (this.selectorBuruh) this.selectorBuruh.clearSelection();
+            if (this.nodes.workForm) this.nodes.workForm.classList.remove("active");
+            
+            // --- TAMBAHAN: Reset input lokasi biar kosong pas form dibuka lagi ---
+            if (inputLokasi) {
+                inputLokasi.value = "";
+                document.querySelector("#lokasi-box")?.classList.remove("blue");
+                document.querySelector("#lokasi-box")?.classList.add("white");
+                document.querySelector("#clear-lokasi")?.classList.add("dis-none");
+            }
+            // ---------------------------------------------------------------------
+
+            // Mengembalikan scroll body yang disembunyikan saat form terbuka
+            document.body.style.overflow = "auto";
+
+            await ApexAlert.success("Tersimpan", "Data masuk antrean pengiriman.");
+
+        } catch (e) {
+            console.error("Gagal menyimpan data:", e);
+            await ApexAlert.error("Gagal", e.message || "Terjadi kesalahan saat menyimpan data.");
+        } finally {
+            // 8. Kembalikan state tombol ke semula apapun hasilnya (sukses/gagal)
+            if (this.nodes.btnSave) {
+                this.nodes.btnSave.disabled = false;
+                this.nodes.btnSave.innerHTML = `SIMPAN DATA`;
+            }
+        }
+    }
+}
+
 class AdvancedPhotoManager {
     constructor(containerId) {
-        this.container = document.getElementById(containerId);
+        this.container = document.querySelector("#form-photos-box");
         if (!this.container) return;
 
         // Ambil semua elemen photo-input yang ada di awal
@@ -202,6 +363,12 @@ class AdvancedPhotoManager {
         this.bindBoxEvents(this.blueprint);
         this.updateState();
         this.updatePhotoBadge();
+
+        const openFoto = document.querySelector("#open-foto-box")
+        const fotoBox   = document.querySelector("#foto-box")
+        if (openFoto && fotoBox) openFoto.onclick = () => fotoBox.classList.remove("dis-none")
+        const fotoClose = document.querySelector("#foto-close")
+        if (fotoClose) fotoClose.onclick = () => fotoBox.classList.add("dis-none")
     }
 
     handlePlusClick(e) {
@@ -274,6 +441,7 @@ class AdvancedPhotoManager {
                 this.updatePhotoBadge();
             }
         };
+        
     }
 
     removeBox(box) {
@@ -491,6 +659,15 @@ class AdvancedWorkerSelector {
         ];
 
         if (this.mainContainer) this.init();
+
+        const openBuruh = document.querySelector("#open-buruh-box")
+        const buruhBox  = document.querySelector("#buruh-box")
+        if(openBuruh && buruhBox) openBuruh.onclick = () => buruhBox.classList.remove("dis-none")
+
+        const buruhNext = document.querySelector("#buruh-next")
+        if (buruhNext) buruhNext.onclick = () => {
+            buruhBox.classList.add("dis-none")
+        }
     }
 
     clearSelection() {
@@ -627,7 +804,7 @@ class AdvancedWorkerSelector {
             // Biar teks tombol berubah dinamis (Centang Semua / Batal Centang Semua)
             const starredIds = starredWorkers.map(w => w.id);
             const isAllStarredSelected = starredIds.every(id => this.selectedIds.has(id));
-            this.selectAllBtn.innerText = isAllStarredSelected ? "Batal Centang Semua" : "Centang Semua";
+            this.selectAllBtn.innerText = isAllStarredSelected ? "Batal Centang Favorit" : "Centang Favorit";
             
             starredWorkers.forEach(worker => {
                 const isSelected = this.selectedIds.has(worker.id);
@@ -707,209 +884,7 @@ class AdvancedWorkerSelector {
     getSelectedWorkerIds() { return Array.from(this.selectedIds); }
     getSelectedWorkersData() { return this.workers.filter(w => this.selectedIds.has(w.id)); }
 }
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Jalankan engine selector buruh
-    const selectorBuruh = new AdvancedWorkerSelector();
-
-    // 2. Tangkap tombol simpan dari HTML lu
-    const btnSave = document.getElementById('btn-save-report');
-    
-    if (btnSave) {
-        // Munculkan tombol (hapus class display none)
-        btnSave.classList.remove('dis-none'); 
-
-        btnSave.onclick = async () => {
-            const buruhIds = selectorBuruh.getSelectedWorkerIds();
-            const buruhLengkap = selectorBuruh.getSelectedWorkersData();
-
-            // 🛑 VALIDASI 1: Cek apakah pengawas belum memilih buruh sama sekali
-            if (buruhIds.length === 0) {
-                await ApexAlert.error(
-                    'Error', 
-                    'Silakan pilih minimal 1 buruh sebelum menyimpan laporan!'
-                );
-                return;
-            }
-
-            // ⚠️ VALIDASI 2: Berikan Alert Konfirmasi biar gak sengaja tersimpan/salah klik
-            const yakinSimpan = await ApexAlert.confirm(
-                'Simpan Laporan?',
-                `Anda akan mencatat ${buruhIds.length} buruh untuk dokumentasi ini. Pastikan data lapangan sudah benar.`,
-                'Ya, Kirim Data',
-                'Cek Kembali'
-            );
-
-            // Jika pengawas klik "Cek Kembali" atau menutup modal, batalkan eksekusi di bawahnya
-            if (!yakinSimpan) return; 
-
-            // 🚀 PROSES KIRIM DATA (AJAX / FETCH API)
-            try {
-                console.log("Mengirim ID Buruh:", buruhIds);
-                console.log("Detail Objek Buruh:", buruhLengkap);
-
-                
-                selectorBuruh.clearSelection();
-
-            } catch (error) {
-                // ❌ STEP 5: Handling jika koneksi putus / server crash di jalan
-                console.error("Gagal mengirim laporan:", error);
-                await ApexAlert.error(
-                    'Gangguan Sinkronisasi', 
-                    `Data gagal dikirim: ${error.message || 'Periksa koneksi internet di lokasi.'}`
-                );
-            }
-        };
-    }
-});
-// ==========================================
-// EXPORT FUNCTION UTAMA ANDA
-// ==========================================
-export function workFormLogic() {
-    const addWorkBtn = document.querySelector("#add-work");
-    const workForm = document.querySelector("#work-form");
-    const closeFormBtn = document.querySelector("#close-work-form");
-    const content = document.querySelector("#content");
-
-    
-    
-    // --- 1. Form Toggle Logic ---
-    if (addWorkBtn && workForm) {
-        // Menggunakan properti onclick lebih aman dari penumpukan event
-        addWorkBtn.onclick = () => {
-            workForm.classList.add("active");
-            document.body.style.overflow = "hidden"; // Prevent background scroll
-        };
-    }
-
-    if (closeFormBtn && workForm) {
-        closeFormBtn.onclick = () => {
-            workForm.classList.remove("active");
-            document.body.style.overflow = "auto";
-        };
-    }
-
-    // --- 2. Lanjutan Logic ---
-    const jenisWork = document.querySelector("#jenis-value")
-    const lanjut    = document.querySelector("#lanjutan-content")
-    const lanjutTextSearch  = document.querySelector("#lanjut-date-search")
-
-    // Pastikan event tidak menumpuk dengan menghapus clone lama jika perlu,
-    // tapi onchange/onclick biasanya aman jika ditulis seperti di bawah.
-    if (jenisWork) {
-        jenisWork.onchange = function () {
-            const value = this.value;
-            console.log(this.value);
-            if (this.value.toUpperCase() == "LANJUTAN") lanjut.classList.remove("dis-none");
-            else lanjut.classList.add("dis-none");
-        };
-    }
-
-    const lanjutaDateIcon   = document.querySelector("#lanjut-date-icon")
-    const lanjutaDateInput  = document.querySelector("#lanjut-date-search")
-    const lanjutaTextIcon   = document.querySelector("#lanjut-text-icon")
-    const lanjutaTextInput  = document.querySelector("#lanjut-text-search")
-    const lanjutTextClose   = document.querySelector("#clear-lanjut")
-
-    if (lanjutaDateIcon && lanjutaDateInput) {
-        lanjutaDateIcon.onclick = () => {
-            lanjutaDateIcon.classList.toggle("on")
-            if (lanjutaDateIcon.classList.contains("on")) lanjutaDateInput.showPicker()
-        }
-        lanjutaDateInput.onchange = function () {
-            if (this.value == "") return ""
-            const date  = new Date(this.value).getDate()
-            const month = new Date(this.value).toLocaleDateString("id-ID", {month : "long"})
-            const year  = new Date(this.value).getFullYear()
-            lanjutaTextInput.value = date.toString().padStart(2, "0") + " " + month + " " + year
-        }
-    }
-
-    if (lanjutaTextInput && lanjutTextClose) {
-        lanjutaTextInput.onkeyup = function (e) {
-            if (this.value == "") lanjutTextClose.classList.add("dis-none")
-            else lanjutTextClose.classList.remove("dis-none")
-        }
-
-        lanjutTextClose.onclick = function () {
-            this.classList.add("dis-none")
-            lanjutTextSearch.value = ""
-        }
-    }
-
-    // --- 3. SUPER ROBUST PHOTO CONTROL ---
-    const photoBox = document.getElementById('form-photos-box');
-    if (photoBox) {
-        // Cegah inisialisasi ganda jika workFormLogic terpanggil lebih dari sekali
-        if (!window.formPhotoManager) {
-            window.formPhotoManager = new AdvancedPhotoManager('form-photos-box');
-            
-            // Registrasi fungsi global untuk keperluan submit form
-            window.getAllUploadedPhotos = () => window.formPhotoManager ? window.formPhotoManager.getAllFiles() : [];
-            window.hasUploadedPhotos = () => window.formPhotoManager ? window.formPhotoManager.hasFiles() : false;
-        } else {
-            // Jika manager sudah ada, panggil ulang init() untuk membersihkan ulang DOM 
-            // jika seandainya HTML-nya baru saja di-render ulang
-            window.formPhotoManager.init();
-        }
-        const openFoto = document.querySelector("#open-foto-box")
-        openFoto.onclick = () => document.querySelector("#foto-box").classList.remove("dis-none")
-        const closeFoto = document.querySelector("#foto-close")
-        closeFoto.onclick = () => document.querySelector("#foto-box").classList.add("dis-none")
-    }
-
-    // --- 4. Form Date Slider Dummy Logic ---
-    const formDatePrev = document.querySelector("#form-date-slider i:first-child");
-    const formDateNext = document.querySelector("#form-date-slider i:last-child");
-    const formDateText = document.querySelector("#form-date-slider .align-center");
-
-    if (formDateText) {
-        let dummyDate = new Date(2026, 3, 22); // April 22, 2026
-        const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-
-        const updateFormDate = () => {
-            formDateText.textContent = `${dummyDate.getDate().toString().padStart(2, "0")} ${months[dummyDate.getMonth()]} ${dummyDate.getFullYear()}`;
-        };
-
-        if (formDatePrev) {
-            formDatePrev.onclick = () => {
-                dummyDate.setDate(dummyDate.getDate() - 1);
-                updateFormDate();
-            };
-        }
-
-        if (formDateNext) {
-            formDateNext.onclick = () => {
-                dummyDate.setDate(dummyDate.getDate() + 1);
-                updateFormDate();
-            };
-        }
-    }
-}
-
-
-
-window.addEventListener("change", function(e) {
-    const elm = e.target
-    if (elm.id == "header-more") {
-        const value = elm.value
-        const box   = elm.closest(".more-box")
-        if (value == "Update") {
-            document.querySelector("#spinner-loader").classList.remove("dis-none")
-            box.classList.add("dis-none")
-            updateLoader()
-        }
-    }
-})
-
-
-
-/**
- * Advanced Custom Datalist with Favorite System & Accessibility
- * Features: OOP, Debouncing, XSS Protection, A11y, State Management, LocalStorage
- */
-export class RobustLocationDatalist {
+class RobustLocationDatalist {
     constructor() {
         // 1. Data Source (Data Riil Administratif & Taman Kota Ambon)
         this.ALL_LOCATIONS = [
@@ -1278,4 +1253,4 @@ export class RobustLocationDatalist {
     }
 }
 
-ApexHttp._getTimeoutForNetwork()
+// ApexHttp._getTimeoutForNetwork()

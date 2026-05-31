@@ -337,7 +337,7 @@
 
                 <!-- Buruh dan Foto -->
                 <div class=" ph-15 gap-15">
-                    <div class="ph-15 flex-start gap-10 w-100 br-solid-2 br-blue pv-15 box-shadow-default borad-10">
+                    <div class="ph-15 flex-start gap-10 w-100 br-solid-2 br-blue pv-15 box-shadow-default borad-10" id="open-buruh-box">
                         <i class="fas fa-users clr-blue"></i>
                         <span class="dis-block w-100">Buruh terlibat</span>
                         <i class="fas fa-arrow-right"></i>
@@ -363,6 +363,7 @@
     </div>
 
 
+    <!-- Date detail -->
     <div id="date-detail" class="dis-none">
         <!-- tanggal dan waktu -->
         <div class="p-15 bolder fz-20 relative flex-beetwen borad-15 hidden glass-box" id="date-boxes">
@@ -451,7 +452,7 @@
     </div>
 
     <!-- Foto -->
-    <div class="vw-100 vh-100 z-9 hidden fixed to-0 left-0 dis-none p-15 black barlow" id="foto-box">
+    <div class="vw-100 vh-100 z-9 hidden fixed to-0 left-0 dis-none p-15 white barlow" id="foto-box">
         <div class="h-100 w-100 scroll">
             <div id="foto-form-header" class="relative blue borad-10">
                 <span class="absolute-v right-10 pointer z-5"><i class="fas fa-arrow-right pointer" id="foto-close"></i></span>
@@ -472,7 +473,7 @@
     </div>
 
     <!-- buruh -->
-    <div id="work-report-wrapper" class="barlow fixed top-0 left-0 report-page-container vh-100 vw-100 p-15 white z-9 fz-18">
+    <div id="buruh-box" class="dis-none barlow fixed top-0 left-0 report-page-container vh-100 vw-100 p-20 white z-9 fz-18">
         
         <div class="worker-selector-container borad-10 w-100">
             <div class="flex-beetwen align-center gap-10 w-100 p-15">
@@ -494,7 +495,7 @@
             <div id="worker-list-render" class="worker-list-scroll"></div>
         </div>
         <div class="flex-end">
-            <button type="button" id="btn-save-report" class="btn-primary-field blue">
+            <button type="button" id="buruh-next" class="btn-primary-field blue">
                 <i class="fas fa-arrow-right"></i>
             </button>
         </div>

@@ -1,16 +1,40 @@
 
 import Calendar from "./js/calendar";
-import { CustomMore, CustomSelect, dashboardToggle, workFormLogic, RobustLocationDatalist } from "./js/ui";
+import { CustomMore, CustomSelect, dashboardToggle, WorkFormController } from "./js/ui";
 import request from "./js/request";
 window.Request = new request();
 
 // Inisialisasi kalender sebagai acuan program
 const appCalendar = new Calendar();
 
-CustomMore();
-CustomSelect()
-dashboardToggle();
-workFormLogic();
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js', { type: 'module' })
+            .then((registration) => {
+                console.log("[SW] Registrasi sukses! Scope:", registration.scope);
+                
+                // Cek apakah ada update baru
+                registration.onupdatefound = () => {
+                    const installingWorker = registration.installing;
+                    installingWorker.onstatechange = () => {
+                        if (installingWorker.state === 'installed') {
+                            if (navigator.serviceWorker.controller) {
+                                console.log("[SW] Konten baru tersedia, silakan refresh.");
+                            } else {
+                                console.log("[SW] Konten sudah ter-cache secara offline.");
+                            }
+                        }
+                    };
+                };
+            })
+            .catch((error) => {
+                console.error("[SW] Registrasi gagal:", error);
+            });
+    });
+} else {
+    console.warn("[SW] Browser tidak mendukung Service Worker.");
+}
 
 /**
  * Inisialisasi UI Kalender menggunakan class Calendar
@@ -90,8 +114,9 @@ function initCalendarUI() {
 // Inisialisasi setelah DOM siap
 document.addEventListener('DOMContentLoaded', () => {
     initCalendarUI();
-    new RobustLocationDatalist();
-    workFormLogic()
+    // new RobustLocationDatalist();
+    // Inisialisasi Otomatis saat DOM siap
+    window.mainFormLogic = new WorkFormController(); 
 });
 
 
