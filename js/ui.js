@@ -1,5 +1,4 @@
-// import {ApexAlert, ApexHttp} from "./bendhard16";
-
+import {ApexAlert, ApexHttp} from "../bendhard16";
 
 export function CustomMore ({elms, callback} = {}) {
     const selector  = elms || ".more-box"
@@ -159,6 +158,7 @@ export function dashboardToggle() {
     }
 }
 
+
 export class WorkFormController {
     constructor() {
         // 1. Kumpulkan semua elemen DOM yang dibutuhkan (Nodes)
@@ -175,8 +175,9 @@ export class WorkFormController {
         };
 
         // 2. Inisialisasi Modul/Class Pendukung (Sesuaikan dengan nama class lu)
-        // this.selectorBuruh = new WorkerSelector(); // Contoh pemanggilan class buruh
-        // this.photoManager = new PhotoManager();    // Contoh pemanggilan class foto
+        this.selectorBuruh = new AdvancedWorkerSelector(); // Contoh pemanggilan class buruh
+        this.photoManager = new AdvancedPhotoManager();    // Contoh pemanggilan class foto
+        new RobustLocationDatalist()
 
         // 3. Panggil fungsi Custom UI bawaan lu secara langsung (Pastikan script-nya udah ter-load)
         if (typeof CustomSelect === "function") {
@@ -189,9 +190,6 @@ export class WorkFormController {
 
         // 4. Pasang semua event listener
         this._bindEvents();
-        new RobustLocationDatalist()
-        new AdvancedWorkerSelector()
-        new AdvancedPhotoManager()
     }
 
     _bindEvents() {
@@ -228,15 +226,16 @@ export class WorkFormController {
         if (inputJenis && lanjutContent) {
             inputJenis.addEventListener("change", (e) => {
                 const val = e.target.value.toLowerCase();
-                if (val === "lanjutan") {
-                    lanjutContent.classList.remove("dis-none");
-                } else {
-                    lanjutContent.classList.add("dis-none");
-                }
+                if (val === "lanjutan") lanjutContent.classList.add("active");
+                else lanjutContent.classList.remove("active");
             });
         }
 
         this.nodes.formClose.onclick = () => this.nodes.workForm.classList.remove("active")
+
+        const lanjutDateInput   = document.querySelector("#lanjut-date-search")
+        const lanjutDateIcon    = document.querySelector("#lanjut-date-icon")
+        if (lanjutDateIcon && lanjutDateInput) lanjutDateIcon.onclick = () => lanjutDateInput.click()
     }
 
     _changeDate(delta) {
@@ -364,11 +363,27 @@ class AdvancedPhotoManager {
         this.updateState();
         this.updatePhotoBadge();
 
-        const openFoto = document.querySelector("#open-foto-box")
+        const formSlide = document.querySelector("#form-slide")
+        const openFoto  = document.querySelector("#open-foto-box")
+
         const fotoBox   = document.querySelector("#foto-box")
-        if (openFoto && fotoBox) openFoto.onclick = () => fotoBox.classList.remove("dis-none")
+        const buruhBox  = document.querySelector("#buruh-box")
+
+        if (openFoto && fotoBox && buruhBox) openFoto.onclick = () => {
+            fotoBox.classList.remove("not-visible")
+            buruhBox.classList.add("not-visible")
+            formSlide.scrollTo({
+                behavior: "smooth",
+                left: 10000,
+                top: 0
+            })
+        }
         const fotoClose = document.querySelector("#foto-close")
-        if (fotoClose) fotoClose.onclick = () => fotoBox.classList.add("dis-none")
+        if (fotoClose) fotoClose.onclick = () => formSlide.scrollTo({
+                behavior: "smooth",
+                left: 0,
+                top: 0
+            })
     }
 
     handlePlusClick(e) {
@@ -629,281 +644,6 @@ class AdvancedPhotoManager {
         });
     }
 }
-// class AdvancedWorkerSelector {
-//     constructor() {
-//         // Ambil element berdasarkan ID murni dari HTML lu
-//         this.mainContainer = document.getElementById('worker-list-render');
-//         this.searchInput = document.getElementById('search-worker');
-//         this.filterStarBtn = document.getElementById('btn-filter-starred');
-//         this.countBadge = document.getElementById('selected-worker-count');
-//         this.filterWrapper = document.querySelector('#buruh-list');
-
-//         this.workers = [];
-//         this.selectedIds = new Set();
-//         this.searchQuery = "";
-//         this.onlyShowStarred = false; // State untuk tombol filter bintang utama
-        
-//         // Element yang di-inject dinamis
-//         this.starredZoneWrapper = null; 
-//         this.starredContainer = null; 
-//         this.selectAllBtn = null;
-
-//         // Data Dummy Otomatis jika localStorage masih kosong
-//         this.dummyData = [
-//             { id: "B001", name: "Ahmad Fauzi", role: "Supir Truk", isStarred: true },
-//             { id: "B002", name: "Budi Santoso", role: "Petugas Lapangan", isStarred: true },
-//             { id: "B003", name: "Chris Pattinama", role: "Kolektor Sampah", isStarred: false },
-//             { id: "B004", name: "Dedi Wijaya", role: "Petugas Lapangan", isStarred: true },
-//             { id: "B005", name: "Eko Prasetyo", role: "Sapu Jalanan", isStarred: false },
-//             { id: "B006", name: "Fandi Ahmad", role: "Kernit Truk", isStarred: false },
-//             { id: "B007", name: "Gatot Kaca", role: "Supir Truk", isStarred: false },
-//             { id: "B008", name: "Hadi Pranoto", role: "Petugas Lapangan", isStarred: true },
-//             { id: "B009", name: "Iwan Fals", role: "Kolektor Sampah", isStarred: true },
-//             { id: "B010", name: "Joko Anwar", role: "Sapu Jalanan", isStarred: false },
-//             { id: "B011", name: "Kurniawan Dwi", role: "Kernit Truk", isStarred: false },
-//             { id: "B012", name: "Lutfi Hakim", role: "Supir Truk", isStarred: true },
-//             { id: "B013", name: "Mamat Alkatiri", role: "Petugas Lapangan", isStarred: false },
-//             { id: "B014", name: "Nanda Saputra", role: "Kolektor Sampah", isStarred: true },
-//             { id: "B015", name: "Oki Setiana", role: "Sapu Jalanan", isStarred: false },
-//             { id: "B016", name: "Putra Siregar", role: "Kernit Truk", isStarred: true },
-//             { id: "B017", name: "Qori Sandi", role: "Supir Truk", isStarred: false },
-//             { id: "B018", name: "Rian Hidayat", role: "Petugas Lapangan", isStarred: true },
-//             { id: "B019", name: "Slamet Riyadi", role: "Kolektor Sampah", isStarred: false },
-//             { id: "B020", name: "Taufik Hidayat", role: "Sapu Jalanan", isStarred: false },
-//             { id: "B021", name: "Udin Sedunia", role: "Kernit Truk", isStarred: true },
-//             { id: "B022", name: "Vino Bastian", role: "Supir Truk", isStarred: false },
-//             { id: "B023", name: "Wawan Hermawan", role: "Petugas Lapangan", isStarred: true },
-//             { id: "B024", name: "Xavi Hernandez", role: "Kolektor Sampah", isStarred: false },
-//             { id: "B025", name: "Yusuf Mansur", role: "Sapu Jalanan", isStarred: true },
-//             { id: "B026", name: "Zaki Mubarak", role: "Kernit Truk", isStarred: false }
-//         ];
-
-//         if (this.mainContainer) this.init();
-
-//         const openBuruh = document.querySelector("#open-buruh-box")
-//         const buruhBox  = document.querySelector("#buruh-box")
-//         if(openBuruh && buruhBox) openBuruh.onclick = () => buruhBox.classList.remove("dis-none")
-
-//         const buruhNext = document.querySelector("#buruh-next")
-//         if (buruhNext) buruhNext.onclick = () => {
-//             buruhBox.classList.add("dis-none")
-//         }
-//     }
-
-//     clearSelection() {
-//         this.selectedIds.clear(); 
-//         localStorage.removeItem('selected_worker_ids'); 
-//         this.render(); 
-//     }
-
-//     init() {
-//         this.injectStarredZone();
-//         this.loadData();
-//         this.bindEvents(); // Sekarang aman karena metodenya sudah ada di bawah
-//         this.render();
-//     }
-
-//     // 🔥 JALUR VIP: Suntik Zona Bintang + Tombol "Centang Semua" secara Dinamis
-//     injectStarredZone() {
-//         if (this.filterWrapper) {
-//             // 1. Buat pembungkus utama area favorit
-//             const zoneWrapper = document.createElement('div');
-//             zoneWrapper.id = 'dynamic-starred-zone-wrapper';
-//             zoneWrapper.style.marginTop = '15px';
-//             zoneWrapper.style.display = 'none';
-
-//             // 2. Buat Row Header (Judul + Tombol Kanan)
-//             const headerRow = document.createElement('div');
-//             headerRow.style.display = 'flex';
-//             headerRow.style.justifyContent = 'space-between';
-//             headerRow.style.alignItems = 'center';
-//             headerRow.style.marginBottom = '8px';
-//             headerRow.style.padding = '0 5px';
-//             headerRow.innerHTML = `
-//                 <span style="font-size: 13px; font-weight: bold; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">
-//                     <i class="fas fa-star" style="color: #f59e0b;"></i> Akses Cepat
-//                 </span>
-//                 <button type="button" id="btn-select-all-starred" class="transparent br-none font-bold" style="font-size: 13px; color: #0284c7; cursor: pointer; outline: none;">
-//                     Centang Semua
-//                 </button>
-//             `;
-
-//             // 3. Buat tempat nampung Chips Buruhnya
-//             const chipsContainer = document.createElement('div');
-//             chipsContainer.id = 'dynamic-starred-chips';
-//             chipsContainer.className = 'starred-zone-chips';
-
-//             zoneWrapper.appendChild(headerRow);
-//             zoneWrapper.appendChild(chipsContainer);
-
-//             // Sisipkan ke HTML (di bawah search filter wrapper)
-//             this.filterWrapper.prepend(zoneWrapper)
-            
-//             // Simpan referensi ke properti class
-//             this.starredZoneWrapper = zoneWrapper;
-//             this.starredContainer = chipsContainer;
-//             this.selectAllBtn = zoneWrapper.querySelector('#btn-select-all-starred');
-//         }
-//     }
-
-//     loadData() {
-//         const localData = localStorage.getItem('master_workers');
-//         if (localData) {
-//             this.workers = JSON.parse(localData);
-//         } else {
-//             this.workers = this.dummyData;
-//             this.saveData();
-//         }
-//     }
-
-//     saveData() {
-//         localStorage.setItem('master_workers', JSON.stringify(this.workers));
-//     }
-
-//     // 🌟 SEBELUMNYA HILANG: Tempat Manajemen Event Listener di Lapangan
-//     bindEvents() {
-//         // 1. Event filter input ketikan pencarian text live
-//         if (this.searchInput) {
-//             this.searchInput.oninput = (e) => {
-//                 this.searchQuery = e.target.value.toLowerCase().trim();
-//                 this.render();
-//             };
-//         }
-
-//         // 2. Event tombol filter bintang utama bawaan HTML lu
-//         if (this.filterStarBtn) {
-//             this.filterStarBtn.onclick = () => {
-//                 this.onlyShowStarred = !this.onlyShowStarred;
-//                 this.filterStarBtn.classList.toggle('active', this.onlyShowStarred);
-//                 this.render();
-//             };
-//         }
-
-//         // 3. Event handler tombol "Centang Semua" khusus baris favorit
-//         if (this.selectAllBtn) {
-//             this.selectAllBtn.onclick = () => {
-//                 const starredWorkers = this.workers.filter(w => w.isStarred);
-//                 if (starredWorkers.length === 0) return;
-
-//                 const starredIds = starredWorkers.map(w => w.id);
-//                 // Cek apakah semua buruh bintang saat ini sudah masuk centangan
-//                 const isAllStarredSelected = starredIds.every(id => this.selectedIds.has(id));
-
-//                 if (isAllStarredSelected) {
-//                     // Jika semua sudah dicentang -> Hapus centang massal favorit
-//                     starredIds.forEach(id => this.selectedIds.delete(id));
-//                 } else {
-//                     // Jika ada yang belum dicentang -> Centang semuanya massal
-//                     starredIds.forEach(id => this.selectedIds.add(id));
-//                 }
-
-//                 this.render(); // Sinkronisasi UI instan
-//             };
-//         }
-//     }
-
-//     toggleSelection(workerId) {
-//         if (this.selectedIds.has(workerId)) {
-//             this.selectedIds.delete(workerId);
-//         } else {
-//             this.selectedIds.add(workerId);
-//         }
-//         this.render();
-//     }
-
-//     render() {
-//         // Clear isi view lama
-//         if (this.starredContainer) this.starredContainer.innerHTML = '';
-//         this.mainContainer.innerHTML = '';
-
-//         // 1. RENDER ZONA AKSES CEPAT (CHIPS BINTANG)
-//         const starredWorkers = this.workers.filter(w => w.isStarred);
-//         if (starredWorkers.length > 0 && this.starredContainer) {
-//             this.starredZoneWrapper.style.display = 'block'; // Tampilkan container area
-
-//             // Biar teks tombol berubah dinamis (Centang Semua / Batal Centang Semua)
-//             const starredIds = starredWorkers.map(w => w.id);
-//             const isAllStarredSelected = starredIds.every(id => this.selectedIds.has(id));
-//             this.selectAllBtn.innerText = isAllStarredSelected ? "Batal Centang Favorit" : "Centang Favorit";
-            
-//             starredWorkers.forEach(worker => {
-//                 const isSelected = this.selectedIds.has(worker.id);
-//                 const chip = document.createElement('div');
-//                 chip.className = `chip-worker-star ${isSelected ? 'selected' : ''}`;
-//                 chip.innerHTML = `<i class="fas fa-star"></i> <span>${worker.name}</span>`;
-                
-//                 chip.onclick = () => this.toggleSelection(worker.id);
-//                 this.starredContainer.appendChild(chip);
-//             });
-//         } else if (this.starredZoneWrapper) {
-//             this.starredZoneWrapper.style.display = 'none'; // Sembunyikan jika kosong
-//         }
-
-//         // 2. RENDER LIST DAFTAR UTAMA
-//         let mainList = [...this.workers];
-
-//         // Filter Berdasarkan Klik Tombol Bintang Utama
-//         if (this.onlyShowStarred) {
-//             mainList = mainList.filter(w => w.isStarred);
-//         }
-
-//         // Filter Berdasarkan Ketikan Kolom Search
-//         if (this.searchQuery) {
-//             mainList = mainList.filter(w => 
-//                 w.name.toLowerCase().includes(this.searchQuery) || 
-//                 w.role.toLowerCase().includes(this.searchQuery)
-//             );
-//         }
-
-//         if (mainList.length === 0) {
-//             this.mainContainer.innerHTML = `<div style="padding:20px; text-align:center; color:#64748b; font-size:14px;">Data buruh tidak ditemukan</div>`;
-//         } else {
-//             mainList.forEach(worker => {
-//                 const isSelected = this.selectedIds.has(worker.id);
-//                 const card = document.createElement('div');
-//                 card.className = `worker-item-card ${isSelected ? 'selected' : ''}`;
-//                 card.innerHTML = `
-//                     <div class="worker-info">
-//                         <input type="checkbox" class="worker-checkbox" ${isSelected ? 'checked' : ''}>
-//                         <div class="worker-meta">
-//                             <span class="name">${worker.name}</span>
-//                             <span class="role">${worker.role}</span>
-//                         </div>
-//                     </div>
-//                     <div class="worker-actions">
-//                         <i class="${worker.isStarred ? 'fas starred' : 'far'} fa-star icon-star-toggle"></i>
-//                     </div>
-//                 `;
-
-//                 // Klik card / centang
-//                 card.onclick = (e) => {
-//                     if (e.target.classList.contains('icon-star-toggle')) return;
-//                     this.toggleSelection(worker.id);
-//                 };
-
-//                 // Klik ganti status bintang
-//                 const starIcon = card.querySelector('.icon-star-toggle');
-//                 starIcon.onclick = (e) => {
-//                     e.stopPropagation();
-//                     worker.isStarred = !worker.isStarred;
-//                     this.saveData();
-//                     this.render(); // Sinkronisasi ulang posisi kedua zona secara live
-//                 };
-
-//                 this.mainContainer.appendChild(card);
-//             });
-//         }
-
-//         // Update Counter Terpilih di HTML Lu
-//         if (this.countBadge) {
-//             this.countBadge.innerText = `${this.selectedIds.size} Terpilih`;
-//         }
-//     }
-
-//     // PUBLIC DATA API FOR EXTRACTION
-//     getSelectedWorkerIds() { return Array.from(this.selectedIds); }
-//     getSelectedWorkersData() { return this.workers.filter(w => this.selectedIds.has(w.id)); }
-// }
 class AdvancedWorkerSelector {
     constructor() {
         this.mainContainer = document.getElementById('worker-list-render');
@@ -950,10 +690,36 @@ class AdvancedWorkerSelector {
 
         const openBuruh = document.querySelector("#open-buruh-box");
         const buruhBox  = document.querySelector("#buruh-box");
-        if(openBuruh && buruhBox) openBuruh.onclick = () => buruhBox.classList.remove("dis-none");
+        
+        const formSlide = document.querySelector("#form-slide")
+        const fotoBox   = document.querySelector("#foto-box")
+
+        if (openBuruh && buruhBox && formSlide) openBuruh.onclick = () => {
+            fotoBox.classList.add("not-visible")
+            buruhBox.classList.remove("not-visible")
+            formSlide.scrollTo({
+                behavior: "smooth",
+                left: 10000,
+                top: 0
+            })
+        }
 
         const buruhNext = document.querySelector("#buruh-next");
-        if (buruhNext) buruhNext.onclick = () => buruhBox.classList.add("dis-none");
+        if (buruhNext) buruhNext.onclick = () => formSlide.scrollTo({
+            behavior: "smooth",
+            left: 0,
+            top: 0
+        })
+
+        const buruhBack = document.querySelector("#buruh-back");
+        if (buruhBack) buruhBack.onclick = () => formSlide.scrollTo({
+            behavior: "smooth",
+            left: 0,
+            top: 0
+        })
+
+        const buruhReset = document.querySelector("#buruh-reset")
+        if(buruhReset) buruhReset.onclick = () => this.uncheckAll()
     }
 
     init() {
@@ -983,50 +749,7 @@ class AdvancedWorkerSelector {
 
         const panel = document.createElement('div');
         panel.id = 'advanced-filter-panel';
-        
-        // UI Premium Enterprise Vibe - Menggunakan #007bff
-        panel.style.cssText = `
-            background: #ffffff; 
-            padding: 16px; 
-            border-radius: 12px; 
-            margin-top: 12px; 
-            margin-bottom: 16px;
-            border: 1px solid #e2e8f0; 
-            box-shadow: 0 10px 15px -3px rgba(0, 123, 255, 0.03), 0 4px 6px -2px rgba(0, 123, 255, 0.02);
-            font-family: system-ui, -apple-system, sans-serif;
-        `;
-
-        panel.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px;">
-                <span style="font-size: 12px; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
-                    <i class="fas fa-filter" style="color: #007bff;"></i> Enterprise Filter Engine
-                </span>
-                <button type="button" id="btn-reset-filter" style="font-size: 11px; color: #dc3545; background: #fdf2f2; border: 1px solid #fde2e2; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 4px; transition: all 0.2s;">
-                    <i class="fas fa-sync-alt"></i> Reset Filter
-                </button>
-            </div>
-
-            <div style="margin-bottom: 14px;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Status Seleksi</div>
-                <div id="status-filter-group" style="display: flex; gap: 6px;">
-                    <button type="button" data-status="all" class="filter-status-btn active" style="padding: 6px 14px; font-size: 12px; border-radius: 6px; border: 1px solid #007bff; background: #007bff; color: #ffffff; cursor: pointer; font-weight: 600; transition: all 0.15s;">Semua</button>
-                    <button type="button" data-status="selected" class="filter-status-btn" style="padding: 6px 14px; font-size: 12px; border-radius: 6px; border: 1px solid #cbd5e1; background: #fff; color: #475569; cursor: pointer; font-weight: 500; transition: all 0.15s;">Terpilih</button>
-                    <button type="button" data-status="unselected" class="filter-status-btn" style="padding: 6px 14px; font-size: 12px; border-radius: 6px; border: 1px solid #cbd5e1; background: #fff; color: #475569; cursor: pointer; font-weight: 500; transition: all 0.15s;">Belum Terpilih</button>
-                </div>
-            </div>
-
-            <div id="dynamic-properties-filter-container" style="display: flex; flex-direction: column; gap: 12px;"></div>
-        `;
-
-        this.filterWrapper.prepend(panel);
-        this.advancedFilterPanel = panel;
-    }
-
-    injectAdvancedFilterPanel() {
-        if (!this.filterWrapper) return;
-
-        const panel = document.createElement('div');
-        panel.id = 'advanced-filter-panel';
+        panel.classList.add("dis-none")
         
         // Premium Enterprise Container Styling
         panel.style.cssText = `
@@ -1077,6 +800,109 @@ class AdvancedWorkerSelector {
 
         this.filterWrapper.prepend(panel);
         this.advancedFilterPanel = panel;
+        const filterOpen = document.querySelector("#btn-advance-filter")
+        if (filterOpen) filterOpen.onclick = () => {
+            panel.classList.toggle("dis-none")
+            filterOpen.classList.toggle("blue")
+        }
+    }
+
+    /**
+     * Master Uncheck Engine (Enterprise Grade)
+     * Mengosongkan semua centang/pilihan buruh sekaligus tanpa sisa.
+     */
+    uncheckAll() {
+        // 1. Bersihkan semua ID yang tersimpan di dalam Set seleksi
+        this.selectedIds.clear();
+
+        // 2. Reset teks tombol "Centang Semua" balik ke kondisi awal jika elemennya ada
+        if (this.selectAllBtn) {
+            this.selectAllBtn.innerText = "Centang Favorit";
+        }
+
+        // 3. LIVE RE-RENDER UI
+        // Detik ini juga semua checkbox di card list lama lo bakal kosong,
+        // dan badge counter otomatis balik ke "0 Terpilih"
+        this.render();
+    }
+
+    /**
+     * Enterprise Bulk Selection Processor
+     * Bertugas mencentang/memilih banyak buruh sekaligus secara otomatis berdasarkan Array ID.
+     * @param {Array} idList - Array berisi kumpulan ID buruh (contoh: [1, 5, 12] atau ["id-1", "id-2"])
+     * @param {Object} options - Konfigurasi tambahan { replace: false }
+     * - replace: true -> Menghapus centang lama dan diganti dengan list baru ini.
+     * - replace: false -> (Default) Menambahkan list baru ini tanpa menghapus yang sudah dicentang sebelumnya.
+     */
+    bulkSelectWorkersByIds(idList, options = { replace: true }) {
+        // Validasi awal untuk memastikan input benar-benar berbentuk array
+        if (!Array.isArray(idList)) {
+            console.error("Gagal eksekusi: Argumen harus berupa Array ID.");
+            return;
+        }
+
+        // 1. Jika mode REPLACE aktif, bersihkan dulu semua centang yang ada saat ini
+        if (options.replace) {
+            this.selectedIds.clear();
+        }
+
+        // 2. Lakukan perulangan untuk memasukkan ID ke dalam database seleksi (Set)
+        idList.forEach(id => {
+            // Samakan tipe data (biasanya di JS database lokal tipenya string atau number)
+            // Kita pastikan id dimurnikan sesuai format data asli lo (di sini kita samakan dengan tipe data di data workers)
+            const targetWorker = this.workers.find(w => String(w.id) === String(id));
+            
+            // Hanya masukkan jika ID buruh tersebut memang valid & terdaftar di data internal kita
+            if (targetWorker) {
+                this.selectedIds.add(targetWorker.id);
+            }
+        });
+
+        // 3. RE-RENDER LIVE UI
+        // Otomatis mengupdate checkbox, card list lama lu, dan angka badge total terpilih secara real-time
+        this.render();
+    }
+
+    /**
+     * Enterprise Bulk Star/Favorite Processor
+     * Bertugas membintangi (favorit) banyak buruh sekaligus secara otomatis berdasarkan Array ID.
+     * @param {Array} idList - Array berisi kumpulan ID buruh (contoh: [2, 4, 8])
+     * @param {Object} options - Konfigurasi tambahan { replace: false }
+     * - replace: true -> Menghapus semua bintang lama dan diganti hanya dengan list baru ini.
+     * - replace: false -> (Default) Menambahkan bintang ke list baru ini tanpa menghapus buruh yang sudah berbintang sebelumnya.
+     */
+    bulkStarWorkersByIds(idList, options = { replace: true }) {
+        // Validasi awal untuk memastikan input benar-benar berbentuk array
+        if (!Array.isArray(idList)) {
+            console.error("Gagal eksekusi: Argumen harus berupa Array ID.");
+            return;
+        }
+
+        // 1. Jika mode REPLACE aktif, matikan semua status bintang (isStarred = false) pada seluruh buruh terlebih dahulu
+        if (options.replace) {
+            this.workers.forEach(worker => {
+                worker.isStarred = false;
+            });
+        }
+
+        // 2. Konversi idList ke Set String untuk memastikan pencocokan tipe data yang super cepat & robust
+        const targetIds = new Set(idList.map(id => String(id)));
+
+        // 3. Lakukan pemindaian data dan nyalakan bintang jika ID cocok
+        this.workers.forEach(worker => {
+            if (targetIds.has(String(worker.id))) {
+                worker.isStarred = true;
+            }
+        });
+
+        // 4. PERSISTENCE STORAGE & RE-RENDER LIVE UI
+        // Wajib simpan perubahan status bintang ke local storage/IndexedDB bawaan lu
+        if (typeof this.saveData === 'function') {
+            this.saveData();
+        }
+        
+        // Otomatis update zona bintang lama lu dan ikon bintang di list card secara real-time
+        this.render();
     }
 
     injectStarredZone() {
@@ -1094,7 +920,7 @@ class AdvancedWorkerSelector {
                     <i class="fas fa-star" style="color: #f59e0b;"></i> Akses Cepat
                 </span>
                 <button type="button" id="btn-select-all-starred" class="transparent br-none font-bold" style="font-size: 13px; color: #0284c7; cursor: pointer; outline: none;">
-                    Centang Semua
+                    Centang Favorit
                 </button>
             </div>
             <div id="dynamic-starred-chips" class="starred-zone-chips"></div>
@@ -1310,7 +1136,7 @@ class AdvancedWorkerSelector {
             this.starredZoneWrapper.style.display = 'block';
             const starredIds = starredWorkers.map(w => w.id);
             const isAllStarredSelected = starredIds.every(id => this.selectedIds.has(id));
-            this.selectAllBtn.innerText = isAllStarredSelected ? "Batal Centang Favorit" : "Centang Semua";
+            this.selectAllBtn.innerText = isAllStarredSelected ? "Batal Centang Favorit" : "Centang Favorit";
             
             starredWorkers.forEach(worker => {
                 const isSelected = this.selectedIds.has(worker.id);
@@ -1875,5 +1701,3 @@ class RobustLocationDatalist {
         this.nodes.list.setAttribute('role', 'listbox');
     }
 }
-
-// ApexHttp._getTimeoutForNetwork()

@@ -1,4 +1,5 @@
 
+import { ApexAlert } from "./bendhard16";
 import Calendar from "./js/calendar";
 import { CustomMore, CustomSelect, dashboardToggle, WorkFormController } from "./js/ui";
 import request from "./js/request";
@@ -114,10 +115,49 @@ function initCalendarUI() {
 // Inisialisasi setelah DOM siap
 document.addEventListener('DOMContentLoaded', () => {
     initCalendarUI();
-    // new RobustLocationDatalist();
-    // Inisialisasi Otomatis saat DOM siap
     window.mainFormLogic = new WorkFormController(); 
 });
 
 
 setTimeout(() => document.querySelectorAll(".shimmer").forEach(elm => elm.classList.add("dis-none")), 1500)
+
+
+
+// ApexAlert.fire({
+//     type: 'info',
+//     title: 'Input Data Sampah Lapangan',
+//     showCancel: true,
+//     confirmText: 'Simpan',
+//     schema: [
+//         {
+//             type: 'text',
+//             name: 'nama_petugas',
+//             label: 'Nama Petugas Lapangan',
+//             placeholder: 'Masukkan nama lengkap',
+//             // 🔥 ATURAN VALIDASI: Cukup tulis deklaratif gini!
+//             rules: {
+//                 required: 'Nama petugas gak boleh kosong, bro!' // Pesan kustom
+//             }
+//         },
+//         {
+//             type: 'number',
+//             name: 'volume',
+//             label: 'Volume Sampah Masuk (Kg)',
+//             placeholder: 'Contoh: 80',
+//             rules: {
+//                 required: 'Volume harus diisi!',
+//                 // Kustom validator: misal volume sampah gak masuk akal kalau di bawah 10Kg
+//                 custom: (val) => {
+//                     if (Number(val) < 10) return 'Volume sampah terlalu sedikit, minimal 10 Kg!';
+//                     if (Number(val) > 5000) return 'Volume overload! Maksimal data input 5000 Kg.';
+//                     return true; // Kembalikan true jika lolos validasi
+//                 }
+//             }
+//         }
+//     ],
+//     preConfirm: async (formData) => {
+//         // Blok ini HANYA AKAN JALAN kalau lolos validasi ketat di atas!
+//         // Di sini tinggal fokus nembak API server dengan tenang tanpa takut data corrupt/kosong
+//         await new Promise(resolve => setTimeout(resolve, 2000));
+//     }
+// });
